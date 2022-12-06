@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ScannerController!{% endblock %}
+
+{% block body %}
+<script src="./js/html5-qrcode.min.js"></script>
+    <style>
+        .result {
+            background-color: green;
+            color: #fff;
+        }
+    </style>
+    <div class="row">
+        <div class="col">
+            <div style="width:500px;" id="reader"></div>
+        </div>
+        <div class="col" style="padding:30px;">
+            <h4>SCAN RESULT</h4>
+            <div id="result">Result Here</div>
+        </div>
+        <div class="col" >            
+                <button id="start" class="button" onclick="start()">Start</button>                   
+        </div>
+    </div>
+    <script type="text/javascript" src="./js/qrCode.js"></script>
+    <script type="text/javascript" src="./js/start.js"></script>
+{% endblock %}

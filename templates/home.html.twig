@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Kidrun - Accueil{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Bienvenue sur KidRun</h1>
+        <p class="lead">KidRun est une application utilisée pour des
+            établissements
+            scolaires pour leur cross afin de démarrer la course, de scanner
+            leur QR-CODE pour enregistrer le chrono de l'élève en faisant
+            automatiquement un classement par classes et par genre.
+        </p>
+        <hr class="my-4">
+        <p>Pour commencer, rendez-vous sur la page du scanner de QR-CODE</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="/scanner" role="button">Scanner</a>
+        </p>
+        <p>ou la page de création d'un QR-CODE</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="/create" role="button">Create</a>
+        </p>
+        <p class="lead">
+            <a href="/classement.php">Classement</a>
+        </p>  
+    </div>
+</div>
+{% endblock %}
