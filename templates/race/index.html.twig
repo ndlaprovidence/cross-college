@@ -23,8 +23,8 @@
                 <td>{{ race.start ? race.start|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ race.importfilename }}</td>
                 <td>
-                    <a href="{{ path('app_race_show', {'id': race.id}) }}">show</a>
-                    <a href="{{ path('app_race_edit', {'id': race.id}) }}">edit</a>
+                    <a href="{{ path('app_race_show', {'id': race.id}) }}" class="btn btn-primary btn-lg" role="button">show</a>
+                    <a href="{{ path('app_race_edit', {'id': race.id}) }}" class="btn btn-primary btn-lg" role="button">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_race_new') }}">Create new</a>
+    <a href="{{ path('app_race_new') }}" class="btn btn-primary btn-lg" role="button">Create new</a>
 {% endblock %}
