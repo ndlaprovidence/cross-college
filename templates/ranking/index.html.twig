@@ -9,8 +9,25 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Ranking</h1>
+    <h1>Classement</h1>
 
+   
+    <table border="1">
+    <tr>
+    <th>Elève</th>
+    <th>Heure de départ</th>
+    <th>Heure d\'arrivée</th>
+    </tr>
+        {% for row in rows %}            
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.end }}</td>                
+            </tr>
+        {% endfor %}
+
+        {{ error_message }}
+    </table>    
+    
 
 </div>
 {% endblock %}
