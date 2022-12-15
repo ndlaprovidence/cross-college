@@ -25,7 +25,7 @@ class RankingController extends AbstractController
             $connexion = new PDO("mysql:host=$serveur;port=3307;dbname=$dbname",$user,$pass);
             $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sth = $connexion->prepare("SELECT * from eleve");
+            $sth = $connexion->prepare("SELECT tbl_student.id, tbl_student.lastname, tbl_student.firstname, tbl_student.gender, tbl_grade.shortname, tbl_grade.level from tbl_student, tbl_grade");
             $sth->execute();
 
             /* Récupération de toutes les lignes d'un jeu de résultats */
