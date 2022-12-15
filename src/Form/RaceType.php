@@ -14,7 +14,6 @@ class RaceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('start')
             // ->add('importfilename')
             ->add('importfilename', FileType::class, [
                 'label' => 'Students (CSV file)',

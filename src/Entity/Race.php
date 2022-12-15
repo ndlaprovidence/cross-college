@@ -17,9 +17,6 @@ class Race
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $start = null;
-
     #[ORM\OneToMany(mappedBy: 'race', targetEntity: Ranking::class, orphanRemoval: true)]
     private Collection $rankings;
 
@@ -36,46 +33,12 @@ class Race
         return $this->id;
     }
 
-    public function getStart(): ?\DateTimeInterface
-    {
-        return $this->start;
-    }
-
-    public function setStart(\DateTimeInterface $start): self
-    {
-        $this->start = $start;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Ranking>
      */
     public function getRankings(): Collection
     {
         return $this->rankings;
-    }
-
-    public function addRanking(Ranking $ranking): self
-    {
-        if (!$this->rankings->contains($ranking)) {
-            $this->rankings->add($ranking);
-            $ranking->setRace($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRanking(Ranking $ranking): self
-    {
-        if ($this->rankings->removeElement($ranking)) {
-            // set the owning side to null (unless already changed)
-            if ($ranking->getRace() === $this) {
-                $ranking->setRace(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getImportfilename(): ?string

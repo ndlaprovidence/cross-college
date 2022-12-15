@@ -58,8 +58,6 @@ class RankingController extends AbstractController
 
         $rows = $rankingRepository->findAll();
 
-
-
         return $this->render('ranking/index.html.twig', [
             'rows' => $rows,
             'error_message' => $error_message,

@@ -19,30 +19,17 @@ class Ranking
 
     #[ORM\ManyToOne(inversedBy: 'rankings')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Race $race = null;
-
-    #[ORM\ManyToOne(inversedBy: 'rankings')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Student $student = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $end = null;
 
+    #[ORM\ManyToOne]
+    private ?Run $run = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getRace(): ?Race
-    {
-        return $this->race;
-    }
-
-    public function setRace(?Race $race): self
-    {
-        $this->race = $race;
-
-        return $this;
     }
 
     public function getStudent(): ?Student
@@ -65,6 +52,18 @@ class Ranking
     public function setEnd(?\DateTimeInterface $end): self
     {
         $this->end = $end;
+
+        return $this;
+    }
+
+    public function getRun(): ?Run
+    {
+        return $this->run;
+    }
+
+    public function setRun(?Run $run): self
+    {
+        $this->run = $run;
 
         return $this;
     }

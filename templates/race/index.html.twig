@@ -11,7 +11,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Start</th>
                 <th>Importfilename</th>
                 <th>actions</th>
             </tr>
@@ -20,7 +19,6 @@
         {% for race in races %}
             <tr>
                 <td>{{ race.id }}</td>
-                <td>{{ race.start ? race.start|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ race.importfilename }}</td>
                 <td>
                     <a href="{{ path('app_race_show', {'id': race.id}) }}" class="btn btn-primary btn-lg" role="button">show</a>

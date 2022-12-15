@@ -13,18 +13,23 @@ $pdf->AddPage();
 
 // set style for barcode
 $style = array(
-    'border' => 2,
-    'vpadding' => 'auto',
+    'position' => '',
+    'align' => 'C',
+    'stretch' => false,
+    'fitwidth' => true,
+    'cellfitalign' => '',
+    'border' => true,
     'hpadding' => 'auto',
+    'vpadding' => 'auto',
     'fgcolor' => array(0,0,0),
-    'bgcolor' => false, //array(255,255,255)
-    'module_width' => 1, // width of a single module in points
-    'module_height' => 1 // height of a single module in points
+    'bgcolor' => false,
+    'text' => true,
+    'font' => 'helvetica',
+    'fontsize' => 8,
+    'stretchtext' => 4
 );
 
-// QRCODE,L : QR-CODE Low error correction
-$pdf->write2DBarcode($id, 'QRCODE,L', 20, 30, 500, 500, $style, 'N');
-$pdf->Text(20, 25, $id);
+$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
+$pdf->write1DBarcode($id, 'C128', '', '', '', 24, 0.4, $style, 'N');
 
-//Close and output PDF document
-$pdf->Output('qrcode.png', 'I');
+$pdf->Output('code_barre.png', 'I');

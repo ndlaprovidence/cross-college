@@ -13,6 +13,46 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/student')]
 class StudentController extends AbstractController
 {
+
+    #[Route('/barcode', name: 'app_student_barcode', methods: ['GET'])]
+    public function barcode(StudentRepository $studentRepository): Response
+    {
+
+        $pdf = new \TCPDF();
+
+        // add a page
+        $pdf->AddPage();
+
+        // set style for barcode
+        $style = array(
+            'position' => '',
+            'align' => 'C',
+            'stretch' => false,
+            'fitwidth' => true,
+            'cellfitalign' => '',
+            'border' => true,
+            'hpadding' => 'auto',
+            'vpadding' => 'auto',
+            'fgcolor' => array(0, 0, 0),
+            'bgcolor' => false,
+            'text' => true,
+            'font' => 'helvetica',
+            'fontsize' => 8,
+            'stretchtext' => 4
+        );
+
+        $students = $studentRepository->findAll();
+        $pdf->Cell(0, 0, "sexe = '" . $students[0]->getGender()."'", 0, 1);
+        $year = date("y");
+        $pdf->Cell(0, 0, "année = '" . $year."'", 0, 1);
+        $id = "F-22-EK-0001";
+
+        $pdf->write1DBarcode($id, 'C128', '', '', '', 24, 0.4, $style, 'N');
+
+        return $pdf->Output('code_barre.png', 'I');
+        //return $this->renderForm('student/barcode.html.twig');
+    }
+
     #[Route('/', name: 'app_student_index', methods: ['GET'])]
     public function index(StudentRepository $studentRepository): Response
     {
@@ -69,7 +109,7 @@ class StudentController extends AbstractController
     #[Route('/{id}', name: 'app_student_delete', methods: ['POST'])]
     public function delete(Request $request, Student $student, StudentRepository $studentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
             $studentRepository->remove($student, true);
         }
 
