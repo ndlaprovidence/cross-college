@@ -4,37 +4,74 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
+
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
 </style>
 
 <div class="example-wrapper">
     <h1>Classement</h1>
+    <table border="0">
+        <th><label> Select a grade</label></th>
+        <th><label> Select a level</label></th>
+        <th><label> Select a gender</label></th>
+        <tr>
+            <td>
+                <select id='grade' name='grades'>
+                    {% for grade in grades %}
+                    <option id='grade' value='{{ grade.shortname }}'>{{ grade.shortname }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select id='level' name='levels'>
+                    {% for level in levels %}
+                    <option  id='level' value='{{ level }}'>{{ level }}</option>
+                        {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select id='gender' name='genders'>
+                    {% for gender in genders %}
+                    <option  id='gender' value='{{ gender }}'>{{ gender }}</option>
+                        {% endfor %}
+                </select>
+            </td>
+        </tr>
+    </table>
 
-   
+    <br /><br />
     <table border="1">
-    <tr>
-    <th>Numéro</th>
-    <th>Nom</th>
-    <th>Prénom</th>
-    <th>Classe</th>
-    <th>Catégorie</th>
-    <th>Genre</th>
-    </tr>
-        {% for row in rows %}            
-            <tr>
-                <td>{{ row.id }}</td>
-                <td>{{ row.lastname }}</td>
-                <td>{{ row.firstname }}</td>
-                <td>{{ row.shortname }}</td>
-                <td>{{ row.level }}</td>
-                <td>{{ row.gender }}</td>                
-            </tr>
+        <tr>
+            <th>Numéro</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Classe</th>
+            <th>Catégorie</th>
+            <th>Genre</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.lastname }}</td>
+            <td>{{ row.firstname }}</td>
+            <td>{{ row.shortname }}</td>
+            <td>{{ row.level }}</td>
+            <td>{{ row.gender }}</td>
+        </tr>
         {% endfor %}
 
         {{ error_message }}
-    </table>    
-    
+    </table>
+
 
 </div>
 {% endblock %}
