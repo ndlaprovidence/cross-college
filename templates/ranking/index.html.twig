@@ -14,14 +14,21 @@
    
     <table border="1">
     <tr>
-    <th>Elève</th>
-    <th>Heure de départ</th>
-    <th>Heure d\'arrivée</th>
+    <th>Numéro</th>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Classe</th>
+    <th>Catégorie</th>
+    <th>Genre</th>
     </tr>
         {% for row in rows %}            
             <tr>
                 <td>{{ row.id }}</td>
-                <td>{{ row.end }}</td>                
+                <td>{{ row.lastname }}</td>
+                <td>{{ row.firstname }}</td>
+                <td>{{ row.shortname }}</td>
+                <td>{{ row.level }}</td>
+                <td>{{ row.gender }}</td>                
             </tr>
         {% endfor %}
 
