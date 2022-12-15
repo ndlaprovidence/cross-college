@@ -15,7 +15,7 @@ class StudentController extends AbstractController
 {
 
     #[Route('/barcode', name: 'app_student_barcode', methods: ['GET'])]
-    public function barcode(StudentRepository $studentRepository): Response
+    public function barcode(StudentRepository $studentRepository)
     {
 
         $pdf = new \TCPDF();
@@ -42,12 +42,43 @@ class StudentController extends AbstractController
         );
 
         $students = $studentRepository->findAll();
-        $pdf->Cell(0, 0, "sexe = '" . $students[0]->getGender()."'", 0, 1);
         $year = date("y");
-        $pdf->Cell(0, 0, "année = '" . $year."'", 0, 1);
-        $id = "F-22-EK-0001";
 
-        $pdf->write1DBarcode($id, 'C128', '', '', '', 24, 0.4, $style, 'N');
+        $i = 0;
+        $y = 0;
+        foreach ($students as $key => $student) {
+
+            $id = $student->getGender() . "-" . $year . "-" . $student->getFirstname()[0] . $student->getLastname()[0] . "-" . sprintf("%04d", $student->getId());
+
+            // for ($i=0; $i<=$students; $i++)
+            // {
+            // $id = $students[$i]->getGender() ."-". $year ."-". $students[$i]->getFirstname()[0]. $students[$i]->getLastname()[0] ."-". "000".$students[$i]->getId();
+            // }
+
+            //$pdf->Cell(0, 0, "sexe = '" . $students[0]->getGender()."'", 0, 1);
+            //$pdf->Cell(0, 0, "année = '" . $year."'", 0, 1);
+            //$pdf->Cell(0, 0, "initiale prénom = '" . $students[0]->getFirstname()[0]."'", 0, 1);
+            //$pdf->Cell(0, 0, "initiale nom = '" . $students[0]->getLastname()[0]."'", 0, 1);
+            //$pdf->Cell(0, 0, "numéro = '" . $students[0]->getId()."'", 0, 1);
+            //$pdf = "F-22-EK-0001";
+
+            if (($i % 2) == 0) {
+                $y = $pdf->GetY();
+                if ($y > 240) {
+                    $pdf->AddPage();
+                    $y = 10;
+                }
+                $pdf->Cell(0, 0, $id, 0, 1);
+                $pdf->write1DBarcode($id, 'C128', '', '', '', 40, 0.4, $style, 'N');
+                $pdf->Ln(4);
+            } else {
+                $pdf->SetY($y);
+                $pdf->Cell(0, 0, $id, 0, 1, 'R');
+                $pdf->write1DBarcode($id, 'C128', '130', '', '', 40, 0.4, $style, 'N');
+                $pdf->Ln(4);
+            }
+            $i++;
+        }
 
         return $pdf->Output('code_barre.png', 'I');
         //return $this->renderForm('student/barcode.html.twig');
