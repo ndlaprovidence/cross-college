@@ -20,12 +20,13 @@
 <div class="example-wrapper">
     <h1>Classement</h1>
     <table border="0">
-        <th><label> Select a grade</label></th>
-        <th><label> Select a level</label></th>
-        <th><label> Select a gender</label></th>
+        <th><label> Grade</label></th>
+        <th><label> Level</label></th>
+        <th><label> Gender</label></th>
         <tr>
             <td>
                 <select id='grade' name='grades'>
+                    <option id='grade'></option>
                     {% for grade in grades %}
                     <option id='grade' value='{{ grade.shortname }}'>{{ grade.shortname }}</option>
                     {% endfor %}
@@ -33,6 +34,7 @@
             </td>
             <td>
                 <select id='level' name='levels'>
+                    <option id='level'></option>
                     {% for level in levels %}
                     <option  id='level' value='{{ level }}'>{{ level }}</option>
                         {% endfor %}
@@ -40,11 +42,13 @@
             </td>
             <td>
                 <select id='gender' name='genders'>
+                    <option id='gender'></option>
                     {% for gender in genders %}
                     <option  id='gender' value='{{ gender }}'>{{ gender }}</option>
                         {% endfor %}
                 </select>
             </td>
+            <td><input type="submit"/></td>
         </tr>
     </table>
 

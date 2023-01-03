@@ -41,7 +41,25 @@ class RankingRepository extends ServiceEntityRepository
 
     /**
     * @return array Returns an array of Ranking objects
-    */public function findStudentsWithGrades(): array
+    */
+    public function findStudentsWithGrades(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT tbl_student.id, tbl_student.lastname, tbl_student.firstname, tbl_student.gender, tbl_grade.shortname, tbl_grade.`level`
+            FROM tbl_student, tbl_grade
+            WHERE tbl_student.grade_id=tbl_grade.id
+            ';
+        $stmt = $conn->prepare($sql);
+        // $resultSet = $stmt->executeQuery(['price' => $price]);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function submit(): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
