@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use App\Repository\RankingRepository;
 use PDO;
 use PDOException;
+use App\Repository\GradeRepository;
+use App\Repository\RankingRepository;
+use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,15 +53,21 @@ class RankingController extends AbstractController
     */
 
     #[Route('/ranking', name: 'app_ranking')]
-    public function index(RankingRepository $rankingRepository): Response
+    public function index(RankingRepository $rankingRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository): Response
     {
         $error_message = "";
         $rows = array();
 
-        $rows = $rankingRepository->findAll();
+        $rows = $rankingRepository->findStudentsWithGrades();
+        $grades = $gradeRepository->findAll();
+        $students = $studentRepository->findAll();
 
         return $this->render('ranking/index.html.twig', [
             'rows' => $rows,
+            'grades' => $grades,
+            'students' => $students,
+            'levels' => array(6, 5, 4, 3),
+            'genders' => array('F', 'G'),
             'error_message' => $error_message,
         ]);
     }
