@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Ranking[]    findAll()
  * @method Ranking[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RankingRepository extends ServiceEntityRepository
+class FilterRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -39,7 +39,25 @@ class RankingRepository extends ServiceEntityRepository
         }
     }
 
-    
+    /**
+    * @return array Returns an array of Ranking objects
+    */
+    public function findStudentsWithGrades(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT tbl_student.id, tbl_student.lastname, tbl_student.firstname, tbl_student.gender, tbl_grade.shortname, tbl_grade.`level`
+            FROM tbl_student, tbl_grade
+            WHERE tbl_student.grade_id=tbl_grade.id
+            ';
+        $stmt = $conn->prepare($sql);
+        // $resultSet = $stmt->executeQuery(['price' => $price]);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 
 //    /**
 //     * @return Ranking[] Returns an array of Ranking objects
@@ -66,3 +84,4 @@ class RankingRepository extends ServiceEntityRepository
 //        ;
 //    }
 }
+

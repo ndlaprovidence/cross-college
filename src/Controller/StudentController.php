@@ -80,7 +80,7 @@ class StudentController extends AbstractController
             $i++;
         }
 
-        return $pdf->Output('code_barre.png', 'I');
+        return $pdf->Output('code_barre.pdf', 'I');
         //return $this->renderForm('student/barcode.html.twig');
     }
 
