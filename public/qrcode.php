@@ -29,7 +29,7 @@ $style = array(
     'stretchtext' => 4
 );
 
-$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
+$pdf->Cell(0, 0, $id, 0, 1);
 $pdf->write1DBarcode($id, 'C128', '', '', '', 24, 0.4, $style, 'N');
 
 $pdf->Output('code_barre.png', 'I');
