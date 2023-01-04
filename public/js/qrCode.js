@@ -1,7 +1,7 @@
 function onScanSuccess(identifiant) {
     document.getElementById('result').innerHTML = '<span class="result">' + identifiant + '</span>';
     let sender = new XMLHttpRequest();
-    sender.open('GET', 'https://benjamin.pro.ndlpavranches.fr/reception/?identifiant=' + identifiant);
+    sender.open('GET', 'http://localhost:8000/reception/?identifiant=' + identifiant);
     sender.send();
     //alert(identifiant); 
 }
