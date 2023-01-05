@@ -53,6 +53,7 @@ class RankingController extends AbstractController
     #[Route('/ranking', name: 'app_ranking')]
     public function index(RankingRepository $rankingRepository): Response
     {       
+        $message = "";
         $dbserver = $this->getParameter("dbserver");
         $dbport = $this->getParameter("dbport");
         $dbname = $this->getParameter("dbname");
