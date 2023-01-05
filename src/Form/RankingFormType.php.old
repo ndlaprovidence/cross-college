@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Grade;
+use App\Entity\Ranking;
+use App\Entity\Student;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class RankingFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        // global $kernel; 
+        // if ( 'AppCache' == get_class($kernel) )
+        // {
+        //     $kernel = $kernel->getKernel();
+        // }
+        // $doctrine = $kernel->getContainer()->get( 'doctrine' );
+        // $rankingRepo = $doctrine->getRepository(Ranking::class);
+        // $rankings = $rankingRepo->findAll();
+        // $builder
+        //     ->add('grade', EntityType::class, [
+        //         'class' => Grade::class,
+        //         'choices' => $grade->getShortname(),
+        //     ])
+        //     ->add('level', EntityType::class, [
+        //         'class' => Grade::class,
+        //         'choices' => $level->getLevel(),
+        //     ])
+        //     ->add('gender', EntityType::class, [
+        //         'class' => Student::class,
+        //         'choices' => $gender->getGender(),
+        //     ]);
+
+        // $builder->add('grade', EntityType::class, array(
+        //     'class' => Grade::class,
+        //     'choice_label' => 'shortname',
+        // ));        
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Ranking::class,
+        ]);
+    }
+}

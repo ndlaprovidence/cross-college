@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Ranking;
 use PDO;
 use PDOException;
 use App\Repository\GradeRepository;
@@ -53,6 +54,7 @@ class RankingController extends AbstractController
         $rows = $rankingRepository->findStudentsWithGrades();
         $grades = $gradeRepository->findAll();
         $students = $studentRepository->findAll();
+        
 
         return $this->render('ranking/index.html.twig', [
             'rows' => $rows,
