@@ -20,23 +20,14 @@ class ReceptionController extends AbstractController
     #[Route('/', name: 'app_reception_index')]
     public function index(RunRepository $runRepository, RankingRepository $rankingRepository, StudentRepository $studentRepository): Response
     {
-        $dbserver = $this->getParameter("dbserver");
-        $dbport = $this->getParameter("dbport");
-        $dbname = $this->getParameter("dbname");
-        $dbuser = $this->getParameter("dbuser");
-        $dbpassword = $this->getParameter("dbpassword");
-
         date_default_timezone_set('Europe/Paris');
         $message = "La course n'a pas encore démarré";
 
         try {
-            $connexion = new PDO("mysql:host=$dbserver;port=$dbport;dbname=$dbname", $dbuser, $dbpassword);
-            $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             if (isset($_GET["identifiant"])) {
                 $identifiant = $_GET["identifiant"];
                 $id = intval(substr($identifiant, 8));
-                $end = date("Y-m-d H:i:s");
-                
+                $end = date("Y-m-d H:i:s");                
                 // Recupérer l'heure de départ
                 $run = $runRepository->getLast();    
                 $startDateTime = $run->getStart();     
@@ -44,7 +35,6 @@ class ReceptionController extends AbstractController
                 $message = "L'élève est arrivé a " . $end . " !";
                 error_log("Heure de départ = '" . $start . "'");
                 error_log("L'élève avec le dossard n° " . $identifiant . " vient d'arriver à " . $end);
-
                 // Enregistrer l'heure d'arrivée de cet élève
                 $student = $studentRepository->find($id);
                 $start = $runRepository->find($start);
@@ -53,15 +43,6 @@ class ReceptionController extends AbstractController
                 $ranking->setEnd(new \DateTime($end));
                 $ranking->setRun($start);
                 $rankingRepository->save($ranking, true);             
-
-
-
-                // $requete = "INSERT INTO `tbl_ranking`( `id`, `end`) VALUES(:identifiant, :end)";
-                // $stmt = $connexion->prepare($requete);
-                // $stmt->bindParam(':identifiant', $identifiant);
-                // $stmt->bindParam(':end', $end);
-                // error_log($requete);
-                // $stmt->execute();
             } else {
                 $start = date("Y-m-d H:i:s");
                 $message = "La course a démarré le " . $start . " !";
