@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ImportStudentController extends AbstractController
 {
     #[Route('/import/student', name: 'app_import_student')]
-    public function index(ImportStudentService $importStudentServic): Response
+    public function index(ImportStudentService $importStudentService): Response
     {
         $io = new SymfonyStyle($input, $output);
         $this->importStudentService->importStudent($io);

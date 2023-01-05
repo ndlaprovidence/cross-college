@@ -68,12 +68,19 @@ class RankingRepository extends ServiceEntityRepository
             FROM tbl_student, tbl_grade
             WHERE tbl_student.grade_id=tbl_grade.id
             ';
+         
         $stmt = $conn->prepare($sql);
         // $resultSet = $stmt->executeQuery(['price' => $price]);
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
+
+        while ($donnees = $response->fetch())
+        {
+             echo $donnees['grades'];
+        }
+        $reponse->closeCursor();
     }
 
 //    /**
