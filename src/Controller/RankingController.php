@@ -53,6 +53,22 @@ class RankingController extends AbstractController
     #[Route('/ranking', name: 'app_ranking')]
     public function index(RankingRepository $rankingRepository): Response
     {       
+        $dbserver = $this->getParameter("dbserver");
+        $dbport = $this->getParameter("dbport");
+        $dbname = $this->getParameter("dbname");
+        $dbuser = $this->getParameter("dbuser");
+        $dbpassword = $this->getParameter("dbpassword");
+
+        try {
+            $connexion = new PDO("mysql:host=$dbserver;port=$dbport;dbname=$dbname", $dbuser, $dbpassword);
+            $requete = "SELECT start FROM tbl_run ORDER BY id DESC LIMIT 1";
+            $stm = $connexion->query($requete);
+            $result = $stm->fetch();
+            $message = "La course a démarré le " . $result[0] . "";
+        } catch (PDOException $e) {
+            error_log('Erreur : ' . $e->getMessage());
+        }
+
         $error_message = "";
         $rows = array();
 
@@ -61,6 +77,7 @@ class RankingController extends AbstractController
         return $this->render('ranking/index.html.twig', [
             'rows' => $rows,
             'error_message' => $error_message,
+            'message' => $message,
         ]);
     }
 }

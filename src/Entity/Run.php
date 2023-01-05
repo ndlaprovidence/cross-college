@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RunRepository::class)]
-#[ORM\Table(name:"tbl_run")]
+#[ORM\Table(name: "tbl_run")]
 class Run
 {
     #[ORM\Id]
@@ -41,4 +41,9 @@ class Run
 
         return $this;
     }
+
+    // public function __toString()
+    // {
+    //     return " Course n°" . $this->id;
+    // }
 }
