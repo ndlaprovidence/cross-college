@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use App\Repository\RankingRepository;
 use PDO;
 use PDOException;
+use App\Repository\RunRepository;
+use App\Repository\RankingRepository;
+use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,21 +53,13 @@ class RankingController extends AbstractController
     */
 
     #[Route('/ranking', name: 'app_ranking')]
-    public function index(RankingRepository $rankingRepository): Response
+    public function index(RunRepository $runRepository, RankingRepository $rankingRepository, StudentRepository $studentRepository): Response
     {       
-        $message = "";
-        $dbserver = $this->getParameter("dbserver");
-        $dbport = $this->getParameter("dbport");
-        $dbname = $this->getParameter("dbname");
-        $dbuser = $this->getParameter("dbuser");
-        $dbpassword = $this->getParameter("dbpassword");
-
         try {
-            $connexion = new PDO("mysql:host=$dbserver;port=$dbport;dbname=$dbname", $dbuser, $dbpassword);
-            $requete = "SELECT start FROM tbl_run ORDER BY id DESC LIMIT 1";
-            $stm = $connexion->query($requete);
-            $result = $stm->fetch();
-            $message = "La course a démarré le " . $result[0] . "";
+            $run = $runRepository->getLast();    
+            $startDateTime = $run->getStart();     
+            $start = $startDateTime->format("Y-m-d H:i:s");
+            $message = "La course a démarré le " . $start . "";
         } catch (PDOException $e) {
             error_log('Erreur : ' . $e->getMessage());
         }
