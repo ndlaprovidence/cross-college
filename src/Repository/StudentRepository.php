@@ -38,7 +38,6 @@ class StudentRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
 //    /**
 //     * @return Student[] Returns an array of Student objects
 //     */

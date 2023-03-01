@@ -4,15 +4,47 @@ namespace App\Controller;
 
 use App\Entity\Student;
 use App\Form\StudentType;
+use Psr\Log\LoggerInterface;
 use App\Repository\StudentRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/student')]
 class StudentController extends AbstractController
 {
+    
+    #[Route('/delete-all', name: 'app_student_delete_all', methods: ['GET', 'POST'])]
+    public function deleteAllStudents(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
+    {
+
+        $form = $this->createFormBuilder()
+            ->add('confirm', CheckboxType::class, [
+                'label' => 'Confirm deletion',
+                'required' => true,
+                'attr' => ['class' => 'form-check-input']
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+        $logger->info('1');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $logger->info('2');
+            $entityManager->createQuery('DELETE * FROM tbl_student')->execute();
+
+            $this->addFlash('success', 'All students have been deleted.');
+
+            return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('student/delete_all.html.twig', [
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/barcode', name: 'app_student_barcode', methods: ['GET'])]
     public function barcode(StudentRepository $studentRepository)
@@ -93,7 +125,7 @@ class StudentController extends AbstractController
     }
 
     #[Route('/new', name: 'app_student_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, StudentRepository $studentRepository): Response
+    public function new (Request $request, StudentRepository $studentRepository): Response
     {
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
@@ -146,4 +178,5 @@ class StudentController extends AbstractController
 
         return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
