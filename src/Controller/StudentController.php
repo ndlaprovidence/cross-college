@@ -48,7 +48,9 @@ class StudentController extends AbstractController
         $y = 0;
         foreach ($students as $key => $student) {
 
-            $id = $student->getGender() . "-" . $year . "-" . $student->getFirstname()[0] . $student->getLastname()[0] . "-" . sprintf("%04d", $student->getId());
+            // $id = $student->getGender() . "-" . $year . "-" . $student->getFirstname()[0] . $student->getLastname()[0] . "-" . sprintf("%04d", $student->getId());
+            $id = sprintf("%04d", $student->getId());
+            $name = $student->getFirstname() . "-" . $student->getLastname();
 
             // for ($i=0; $i<=$students; $i++)
             // {
@@ -68,13 +70,13 @@ class StudentController extends AbstractController
                     $pdf->AddPage();
                     $y = 10;
                 }
-                $pdf->Cell(0, 0, $id, 0, 1);
-                $pdf->write1DBarcode($id, 'C128', '', '', '', 40, 0.4, $style, 'N');
+                $pdf->Cell(0, 0, $name, 0, 1);
+                $pdf->write1DBarcode($id, 'C39', '', '', '', 40, 0.7, $style, 'N');
                 $pdf->Ln(4);
             } else {
                 $pdf->SetY($y);
-                $pdf->Cell(0, 0, $id, 0, 1, 'R');
-                $pdf->write1DBarcode($id, 'C128', '130', '', '', 40, 0.4, $style, 'N');
+                $pdf->Cell(0, 0, $name, 0, 1, 'R');
+                $pdf->write1DBarcode($id, 'C39', '120', '', '', 40, 0.7, $style, 'N');
                 $pdf->Ln(4);
             }
             $i++;

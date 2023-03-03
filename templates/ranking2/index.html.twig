@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Ranking2Controller!{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_label(form.barcode) }}
+    {{ form_widget(form.barcode) }}
+    {{ form_row(form.submit) }}
+{{ form_end(form) }}
+{% endblock %}

@@ -5,3 +5,7 @@ controllers:
 app_lucky_number:
     path: /lucky/number
     controller: App\Controller\LuckyController::number
+
+ranking2_scan:
+    path: /ranking2/scan
+    controller: App\Controller\Ranking2Controller::scanAction
