@@ -12,37 +12,61 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 #[Route('/student')]
 class StudentController extends AbstractController
 {
     
+    // #[Route('/delete-all', name: 'app_student_delete_all', methods: ['GET', 'POST'])]
+    // public function deleteAllStudents(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
+    // {
+
+    //     $form = $this->createFormBuilder()
+    //         ->add('confirm', CheckboxType::class, [
+    //             'label' => 'Confirm deletion',
+    //             'required' => true,
+    //             'attr' => ['class' => 'form-check-input']
+    //         ])
+    //         ->getForm();
+
+    //     $form->handleRequest($request);
+    //     $logger->info('1');
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $logger->info('2');
+    //         $entityManager->createQuery('DELETE * FROM tbl_student')->execute();
+
+    //         $this->addFlash('success', 'All students have been deleted.');
+
+    //         return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('student/delete_all.html.twig', [
+    //         'form' => $form,
+    //     ]);
+    // }
     #[Route('/delete-all', name: 'app_student_delete_all', methods: ['GET', 'POST'])]
-    public function deleteAllStudents(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
+    public function deleteAll(Request $request, EntityManagerInterface $entityManager): Response
     {
-
         $form = $this->createFormBuilder()
-            ->add('confirm', CheckboxType::class, [
-                'label' => 'Confirm deletion',
-                'required' => true,
-                'attr' => ['class' => 'form-check-input']
-            ])
+            ->add('confirm', HiddenType::class)
             ->getForm();
-
         $form->handleRequest($request);
-        $logger->info('1');
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            $logger->info('2');
-            $entityManager->createQuery('DELETE * FROM tbl_student')->execute();
-
-            $this->addFlash('success', 'All students have been deleted.');
-
-            return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
+            $entityManager->createQueryBuilder()
+                ->delete('App\Entity\Student')
+                ->getQuery()
+                ->execute();
+    
+            $this->addFlash('success', 'Tous les étudiants ont été supprimés avec succès.');
+    
+            return $this->redirectToRoute('app_student_index');
         }
-
-        return $this->renderForm('student/delete_all.html.twig', [
-            'form' => $form,
+    
+        return $this->render('student/delete_all.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -169,14 +193,34 @@ class StudentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_student_delete', methods: ['POST'])]
-    public function delete(Request $request, Student $student, StudentRepository $studentRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
-            $studentRepository->remove($student, true);
-        }
+    // #[Route('/{id}', name: 'app_student_delete', methods: ['POST'])]
+    // public function delete(Request $request, Student $student, StudentRepository $studentRepository, EntityManagerInterface $entityManager): Response
+    // {
+    //     // if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
+    //     //     $studentRepository->remove($student, true);
+    //     // }
 
-        return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
-    }
+    //     // return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
+    //     $form = $this->createFormBuilder()
+    //         ->add('confirm', HiddenType::class)
+    //         ->getForm();
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->createQueryBuilder()
+    //             ->delete('App\Entity\Table', 't')
+    //             ->getQuery()
+    //             ->execute();
+
+    //         $this->addFlash('success', 'La table a été vidée avec succès.');
+
+    //         return $this->redirectToRoute('app_student_index');
+    // }
+
+    //     return $this->render('student/delete_all.html.twig', [
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
+   
 
 }

@@ -6,6 +6,8 @@ use App\Entity\Student;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class StudentType extends AbstractType
 {
@@ -18,6 +20,10 @@ class StudentType extends AbstractType
             ->add('mas')
             ->add('objective')
             ->add('grade')
+            ->add('submit', SubmitType::class, [
+                'label' => 'Vider la table',
+            ])
+            ->setMethod('POST');
         ;
     }
 
