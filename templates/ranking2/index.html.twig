@@ -3,10 +3,27 @@
 {% block title %}Hello Ranking2Controller!{% endblock %}
 
 {% block body %}
+
 {{ form_start(form) }}
-    {{ form_errors(form) }}
-    {{ form_label(form.barcode) }}
-    {{ form_widget(form.barcode) }}
-    {{ form_row(form.submit) }}
+
+{{ form_row(form.barcode) }}
+
 {{ form_end(form) }}
+
+<p>Code barre = {{ barcode }}</p>
+
 {% endblock %}
+
+{# {% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('input#barcode').on('input', function() {
+                var barcode = $(this).val();
+                if (barcode.length === 4) {
+                    $('form').submit();
+                }
+            });
+        });
+    </script>
+{% endblock %} #}
