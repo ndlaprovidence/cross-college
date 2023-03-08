@@ -7,8 +7,6 @@
 {{ form_start(form) }}
 
 {{ form_row(form.identifiant) }}
-{{ student.firstname }}
-{{ student.lastname }}
 
 {{ form_end(form) }}
 
@@ -19,4 +17,20 @@
 </div>
 <script type="text/javascript" src="./js/start.js"></script>
 
+<h1>{{ message }}</h1>
+<table border="1">
+    <tr>
+        <th>Elève</th>
+        <th>Heure de départ</th>
+        <th>Heure d\'arrivée</th>
+    </tr>
+    <tr>
+        {% if student is not null %}
+        <td>{{ student.firstname }} {{ student.lastname }}</td>
+        <td></td>
+        {% endif %}
+    </tr>
+
+{{ error_message }}
+</table>
 {% endblock %}

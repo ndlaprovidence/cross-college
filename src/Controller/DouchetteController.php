@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Student;
+use App\Repository\RunRepository;
 use App\Repository\StudentRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DouchetteController extends AbstractController
 {
     #[Route('/douchette', name: 'app_douchette')]
-    public function createDouchetteAction(Request $request, StudentRepository $studentRepository, ManagerRegistry $doctrine)
+    public function createDouchetteAction(Request $request, StudentRepository $studentRepository, RunRepository $runRepository, ManagerRegistry $doctrine)
     {
         $identifiant = "";
         $form = $this->createFormBuilder()
@@ -40,10 +41,19 @@ class DouchetteController extends AbstractController
 
         $personne = $doctrine->getRepository(Student::class)->findOneBy(['id' => $identifiant]);
 
+        $run = $runRepository->getLast();    
+        $startDateTime = $run->getStart();     
+        $start = $startDateTime->format("Y-m-d H:i:s");
+        $message = "La course a démarré le " . $start . "";
+
+        $error_message = "";
+
         return $this->render('douchette/index.html.twig', [
             'form' => $form->createView(),
             'identifiant' => $identifiant,
             'student' => $personne,
+            'message' => $message,
+            'error_message' => $error_message,
         ]);
     }
 }
