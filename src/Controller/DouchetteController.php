@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use PhpSerial;
+use App\Entity\Student;
+use App\Repository\StudentRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
@@ -10,44 +12,38 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class Ranking2Controller extends AbstractController
+class DouchetteController extends AbstractController
 {
-    /**
-     * @Route("/ranking2", name="ranking2")
-     */
-    public function createRanking2Action(Request $request)
+    #[Route('/douchette', name: 'app_douchette')]
+    public function createDouchetteAction(Request $request, StudentRepository $studentRepository, ManagerRegistry $doctrine)
     {
-        $barcode = "";
-        // Création du formulaire
+        $identifiant = "";
         $form = $this->createFormBuilder()
-            ->add('barcode', TextType::class, [
+            ->add('identifiant', TextType::class, [
                 'label' => 'Barcode',
                 'attr' => [
                     'readonly' => false,
                 ],
                 'constraints' => [
-                    new Length(['min' => 3, 'max' => 4])
+                    new Length(['min' => 1, 'max' => 4])
                 ],
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Envoyer'])
             ->getForm();
 
-        // Traitement du formulaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $barcode = $data['barcode'];        
-            // Do something with the submitted data, e.g. save it to a database
-
-            // Redirect to a success page
-            // return $this->redirectToRoute('/ranking2');
+            $identifiant = $data['identifiant'];        
+            // return $this->redirectToRoute('/Douchette');
         }
 
-        // Affichage du formulaire
-        return $this->render('ranking2/index.html.twig', [
+        $personne = $doctrine->getRepository(Student::class)->findOneBy(['id' => $identifiant]);
+
+        return $this->render('douchette/index.html.twig', [
             'form' => $form->createView(),
-            'barcode' => $barcode,
+            'identifiant' => $identifiant,
+            'student' => $personne,
         ]);
     }
 }

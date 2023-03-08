@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Ranking2Controller!{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+
+{{ form_row(form.identifiant) }}
+{{ student.firstname }}
+{{ student.lastname }}
+
+{{ form_end(form) }}
+
+<p>Code barre = {{ identifiant }}</p>
+
+<div class="col" >            
+    <button id="start" class="button" onclick="start()">Start</button>             
+</div>
+<script type="text/javascript" src="./js/start.js"></script>
+
+{% endblock %}
