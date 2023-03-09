@@ -85,6 +85,8 @@ class RankingController extends AbstractController
             $chronometres[$row->getStudent()->getId()] = $chronometre;
         }
 
+        asort($chronometres);
+
         return $this->render('ranking/index.html.twig', [
             'rows' => $rows,
             'error_message' => $error_message,

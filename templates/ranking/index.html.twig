@@ -24,26 +24,23 @@
 
     <table class="table">
         <tr>
+            <th scope="col">Classement</th>
             <th scope="col">Elève</th>
             <th scope="col">Heure de départ</th>
             <th scope="col">Heure d'arrivée</th>
             <th scope="col">Chronomètre</th>
         </tr>
+        {% set classement = 1 %}
         {% for row in rows %}
         <tr>
+            <td>{{ classement }}</td>
             <td>{{ row.student.firstname }} {{ row.student.lastname }}</td>
             <td>{{ start }}</td>
             <td>{{ row.end|date("Y-m-d H:i:s") }}</td>
             <td>{{ chronometres[row.getStudent().getId()] }}</td> 
         </tr>
-        {% endfor %}
-        {# {% for student in students %}
-        <tr>
-            <td>{{ student.firstname }}</td>
-            <td>{{ student.lastname }}</td>
-        </tr>
-        {% endfor %} #}
-
+        {% set classement = classement + 1 %}
+        {% endfor %}   
         {{ error_message }}
     </table>
 

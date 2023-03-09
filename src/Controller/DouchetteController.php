@@ -25,6 +25,7 @@ class DouchetteController extends AbstractController
     public function createDouchetteAction(Request $request, StudentRepository $studentRepository, RunRepository $runRepository, ManagerRegistry $doctrine, RankingRepository $rankingRepository)
     {
         $error_message = "";
+        $success_message = "";
         date_default_timezone_set('Europe/Paris');
         $identifiant = "";
         $form = $this->createFormBuilder()
@@ -63,6 +64,7 @@ class DouchetteController extends AbstractController
                 // L'étudiant a déjà été ajouté à la table tbl_ranking pour cette course
                 $error_message .= "Runner already added.";
             } else {
+            $success_message .= "Runner added.";
             $end = date("Y-m-d H:i:s");
 
             $run = $runRepository->getLast();
@@ -81,9 +83,36 @@ class DouchetteController extends AbstractController
             $student = new Student();
         }
 
+        $entityManager = $doctrine->getManager();
+        $rows = $entityManager->createQuery('SELECT r FROM App\Entity\Ranking r')->getResult();
+
+        $run = $runRepository->getLast();
+        $startDateTime = $run->getStart();
+        $start = $startDateTime->format("Y-m-d H:i:s");
+
+        $chronometres = array();
+        foreach ($rows as $row) {
+            $endDateTime = $row->getEnd();
+            $end = $endDateTime->format("Y-m-d H:i:s");
+            $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
+
+            $diff = $startDateTime->diff($endDateTime);
+
+            $hours = $diff->h;
+            $minutes = $diff->i;
+            $seconds = $diff->s;
+
+            $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+
+            $chronometres[$row->getStudent()->getId()] = $chronometre;
+        }
+
         return $this->render('douchette/index.html.twig', [
             'form' => $form->createView(),
             'error_message' => $error_message,
+            'success_message' => $success_message,
+            'rows' => $rows,
+            'chronometres' => $chronometres
         ]);
     }
 }
