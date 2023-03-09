@@ -46,29 +46,6 @@ class StudentController extends AbstractController
     //         'form' => $form,
     //     ]);
     // }
-    #[Route('/delete-all', name: 'app_student_delete_all', methods: ['GET', 'POST'])]
-    public function deleteAll(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createFormBuilder()
-            ->add('confirm', HiddenType::class)
-            ->getForm();
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->createQueryBuilder()
-                ->delete('App\Entity\Student')
-                ->getQuery()
-                ->execute();
-    
-            $this->addFlash('success', 'Tous les étudiants ont été supprimés avec succès.');
-    
-            return $this->redirectToRoute('app_student_index');
-        }
-    
-        return $this->render('student/delete_all.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
 
     #[Route('/barcode', name: 'app_student_barcode', methods: ['GET'])]
     public function barcode(StudentRepository $studentRepository)
@@ -191,6 +168,24 @@ class StudentController extends AbstractController
             'student' => $student,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/delete-all', name: 'app_student_delete_all', methods: ['GET', 'POST'])]
+    public function deleteAll(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createFormBuilder()
+            ->add('confirm', HiddenType::class)
+            ->getForm();
+        $form->handleRequest($request);
+
+        $entityManager->createQueryBuilder()
+            ->delete(Student::class)
+            ->getQuery()
+            ->execute();
+
+        $this->addFlash('success', 'Tous les étudiants ont été supprimés avec succès.');
+    
+        return $this->redirectToRoute('app_student_index');
     }
 
     // #[Route('/{id}', name: 'app_student_delete', methods: ['POST'])]

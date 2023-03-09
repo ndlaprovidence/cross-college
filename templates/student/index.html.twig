@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1>Student index</h1>
-
+    <a href="{{ path('app_student_new') }}" class="btn btn-primary btn-lg" role="button">Create new</a>
+    <br>
+    <a href="#" class="btn btn-primary btn-lg" role="button">Exporter la liste des étudiants</a>
     <table class="table">
         <thead>
             <tr>
@@ -39,9 +41,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_student_new') }}" class="btn btn-primary btn-lg" role="button">Create new</a>
     <form action="{{ path('app_student_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all students?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-    <button type="submit" class="btn btn-danger">Vider toutes les données de la table "Student"</button>
-</form>
+        <input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+        <button type="submit" class="btn btn-danger">Vider toutes les données de la table "Student"</button>
+        </form>
 {% endblock %}
