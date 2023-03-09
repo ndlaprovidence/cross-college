@@ -4,33 +4,25 @@
 
 {% block body %}
 
+<br/>
+<p class="text-danger">{{ error_message }} </p>
+
 {{ form_start(form) }}
 
 {{ form_row(form.identifiant) }}
 
 {{ form_end(form) }}
 
-<p>Code barre = {{ identifiant }}</p>
-
 <div class="col" >            
     <button id="start" class="button" onclick="start()">Start</button>             
 </div>
 <script type="text/javascript" src="./js/start.js"></script>
-
-<h1>{{ message }}</h1>
-<table border="1">
-    <tr>
-        <th>Elève</th>
-        <th>Heure de départ</th>
-        <th>Heure d\'arrivée</th>
-    </tr>
-    <tr>
-        {% if student is not null %}
-        <td>{{ student.firstname }} {{ student.lastname }}</td>
-        <td></td>
-        {% endif %}
-    </tr>
-
-{{ error_message }}
-</table>
 {% endblock %}
+{# {% for row in rows %}
+        <tr>
+            <td>{{ row.firstname }} {{ row.lastname }}</td>
+            <td>{{ start|date("H:i:s") }}</td>
+            <td>{{ end|date("H:i:s") }}</td>
+            <td>{{ chronometre }}</td>
+        </tr>
+    {% endfor %} #}

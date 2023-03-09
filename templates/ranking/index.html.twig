@@ -22,17 +22,19 @@
     <h1>Classement</h1>
 
 
-    <table border="1">
+    <table class="table">
         <tr>
-            <th>Elève</th>
-            <th>Heure de départ</th>
-            <th>Heure d\'arrivée</th>
+            <th scope="col">Elève</th>
+            <th scope="col">Heure de départ</th>
+            <th scope="col">Heure d'arrivée</th>
+            <th scope="col">Chronomètre</th>
         </tr>
         {% for row in rows %}
         <tr>
-            <td>{{ row.student }}</td>
-            <td>{{ row.start }}</td>
+            <td>{{ row.student.firstname }} {{ row.student.lastname }}</td>
+            <td>{{ start }}</td>
             <td>{{ row.end|date("Y-m-d H:i:s") }}</td>
+            <td>{{ chronometres[row.getStudent().getId()] }}</td> 
         </tr>
         {% endfor %}
         {# {% for student in students %}

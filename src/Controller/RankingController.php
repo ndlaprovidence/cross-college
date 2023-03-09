@@ -54,10 +54,10 @@ class RankingController extends AbstractController
 
     #[Route('/ranking', name: 'app_ranking')]
     public function index(RunRepository $runRepository, RankingRepository $rankingRepository, StudentRepository $studentRepository): Response
-    {       
+    {
         try {
-            $run = $runRepository->getLast();    
-            $startDateTime = $run->getStart();     
+            $run = $runRepository->getLast();
+            $startDateTime = $run->getStart();
             $start = $startDateTime->format("Y-m-d H:i:s");
             $message = "La course a démarré le " . $start . "";
         } catch (PDOException $e) {
@@ -65,14 +65,32 @@ class RankingController extends AbstractController
         }
 
         $error_message = "";
-        $rows = array();
 
         $rows = $rankingRepository->findAll();
+
+        $chronometres = array();
+        foreach ($rows as $row) {
+            $endDateTime = $row->getEnd();
+            $end = $endDateTime->format("Y-m-d H:i:s");
+            $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
+
+            $diff = $startDateTime->diff($endDateTime);
+
+            $hours = $diff->h;
+            $minutes = $diff->i;
+            $seconds = $diff->s;
+
+            $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+
+            $chronometres[$row->getStudent()->getId()] = $chronometre;
+        }
 
         return $this->render('ranking/index.html.twig', [
             'rows' => $rows,
             'error_message' => $error_message,
             'message' => $message,
+            'start' => $start,
+            'chronometres' => $chronometres,
         ]);
     }
 }
