@@ -18,11 +18,12 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\RouterInterface;
 
 class DouchetteController extends AbstractController
 {
     #[Route('/douchette', name: 'app_douchette')]
-    public function createDouchetteAction(Request $request, StudentRepository $studentRepository, RunRepository $runRepository, ManagerRegistry $doctrine, RankingRepository $rankingRepository)
+    public function createDouchetteAction(Request $request, StudentRepository $studentRepository, RunRepository $runRepository, ManagerRegistry $doctrine, RankingRepository $rankingRepository, RouterInterface $router)
     {
         $error_message = "";
         $success_message = "";
@@ -51,7 +52,7 @@ class DouchetteController extends AbstractController
             $data = $form->getData();
             $identifiant = $data['identifiant'];
         }
-
+        
         $student = $studentRepository->find($identifiant);
 
         if (isset($student)) {
@@ -78,6 +79,23 @@ class DouchetteController extends AbstractController
             $ranking->setRun($run);
             $rankingRepository->save($ranking, true);
             }
+
+            $form = $this->createFormBuilder()
+            ->add('identifiant', TextType::class, [
+                'label' => 'Barcode',
+                'attr' => [
+                    'readonly' => false,
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => 1,
+                        'max' => 4,
+                        'maxMessage' => 'This value is too long. It should have 4 characters or less',
+                    ]),
+                    new UpperCase(),
+                ],
+            ])
+            ->getForm();
         } else {
             $error_message .= "Runner not found.";
             $student = new Student();

@@ -78,7 +78,8 @@ class ImportStudentService
         $student->setLastname($arrayStudent['Nom'])
             ->setFirstname($arrayStudent['Prénom'])
             ->setGender($arrayStudent['SEXE'])
-            ->setMas(floatval($arrayStudent['VMA']));
+            ->setMas(floatval($arrayStudent['VMA']))
+            ->setObjective($arrayStudent['OBJECTIVE']);
 
         $grade = $this->gradeRepository->findOneBy(['shortname' => $arrayStudent['CLASSE']]);
         if (!$grade) {

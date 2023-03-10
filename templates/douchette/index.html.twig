@@ -27,22 +27,35 @@
 		<tr>
 			<th scope="col">Classement</th>
 			<th scope="col">Elève</th>
-			<th scope="col">Heure de départ</th>
-			<th scope="col">Heure d'arrivée</th>
 			<th scope="col">Chronomètre</th>
+			<th scope="col">VMA</th>
+			<th scope="col">Objective</th>
+			{# <th scope="col">Heure de départ</th>
+			<th scope="col">Heure d'arrivée</th> #}
 		</tr>
 		{% set classement = 1 %}
 		{% for row in rows %}
 			<tr>
 				<td>{{ classement }}</td>
 				<td>{{ row.student.firstname }} {{ row.student.lastname }}</td>
-				<td>{{ row.run.start|date("Y-m-d H:i:s") }}</td>
-				<td>{{ row.end|date("Y-m-d H:i:s") }}</td>
 				<td>{{ chronometres[row.getStudent().getId()] }}</td>
-                <td></td>
+				<td>{{ row.student.mas }}</td>
+				<td>{{ row.student.objective }}</td>
+				{# <td>{{ row.run.start|date("Y-m-d H:i:s") }}</td> #}
+				{# <td>{{ row.end|date("Y-m-d H:i:s") }}</td> #}	
 			</tr>
 			{% set classement = classement + 1 %}
 		{% endfor %}
-		{{ error_message }}
 	</table>
+
+	<script type="text/javascript">
+        window.onload = function() {
+            // Sélectionne le champ "identifiant"
+            var identifiantField = document.getElementById("{{ form.identifiant.vars.id }}");
+
+            // Met en surbrillance le champ "identifiant"
+            identifiantField.focus();
+            identifiantField.select();
+        }
+    </script>
 {% endblock %}
