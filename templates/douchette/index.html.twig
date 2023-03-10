@@ -10,6 +10,10 @@
 	</p>
 	<p class="text-success">{{ success_message }}
 	</p>
+	<p class="text-success">{{ message }}
+	</p>
+	<p class="text-info">{{ run_message }}
+	</p>
 
 	{{ form_start(form) }}
 
@@ -21,7 +25,6 @@
 		<button id="start" class="button" onclick="start()">Start</button>
 	</div>
 	<script type="text/javascript" src="./js/start.js"></script>
-
 
 	<table class="table">
 		<tr>
@@ -43,6 +46,15 @@
 			</tr>
 			{% set classement = classement + 1 %}
 		{% endfor %}
-		{{ error_message }}
 	</table>
+
+	<script type="text/javascript">
+        window.onload = function() {
+            // Sélectionne le champ "identifiant"
+            var identifiantField = document.getElementById("{{ form.identifiant.vars.id }}");
+            // Met en surbrillance le champ "identifiant"
+            identifiantField.focus();
+            identifiantField.select();
+        }
+    </script>
 {% endblock %}

@@ -26,6 +26,7 @@ class DouchetteController extends AbstractController
     {
         $error_message = "";
         $success_message = "";
+        $run_message = "";
         date_default_timezone_set('Europe/Paris');
         $identifiant = "";
         $form = $this->createFormBuilder()
@@ -70,7 +71,6 @@ class DouchetteController extends AbstractController
             $run = $runRepository->getLast();
             $startDateTime = $run->getStart();
             $start = $startDateTime->format("Y-m-d H:i:s");
-            $message = "La course a démarré le " . $start . "";
 
             $ranking = new Ranking();
             $ranking->setStudent($student);
@@ -78,6 +78,23 @@ class DouchetteController extends AbstractController
             $ranking->setRun($run);
             $rankingRepository->save($ranking, true);
             }
+
+            $form = $this->createFormBuilder()
+            ->add('identifiant', TextType::class, [
+                'label' => 'Barcode',
+                'attr' => [
+                    'readonly' => false,
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => 1,
+                        'max' => 4,
+                        'maxMessage' => 'This value is too long. It should have 4 characters or less',
+                    ]),
+                    new UpperCase(),
+                ],
+            ])
+            ->getForm();
         } else {
             $error_message .= "Runner not found.";
             $student = new Student();
@@ -87,33 +104,53 @@ class DouchetteController extends AbstractController
         $rows = $entityManager->createQuery('SELECT r FROM App\Entity\Ranking r')->getResult();
 
         $run = $runRepository->getLast();
-        $startDateTime = $run->getStart();
-        $start = $startDateTime->format("Y-m-d H:i:s");
+        if ($run !== null) {
+            $startDateTime = $run->getStart();
+            $start = $startDateTime->format("Y-m-d H:i:s");
+            $message = "The race started on " . $start . "";
 
-        $chronometres = array();
-        foreach ($rows as $row) {
-            $endDateTime = $row->getEnd();
-            $end = $endDateTime->format("Y-m-d H:i:s");
-            $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
+            $run_message .= "Run found.";
 
-            $diff = $startDateTime->diff($endDateTime);
+            $chronometres = array();
+            foreach ($rows as $row) {
+                $endDateTime = $row->getEnd();
+                $end = $endDateTime->format("Y-m-d H:i:s");
+                $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
 
-            $hours = $diff->h;
-            $minutes = $diff->i;
-            $seconds = $diff->s;
+                $diff = $startDateTime->diff($endDateTime);
 
-            $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+                $hours = $diff->h;
+                $minutes = $diff->i;
+                $seconds = $diff->s;
 
-            $chronometres[$row->getStudent()->getId()] = $chronometre;
+                $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+
+                $chronometres[$row->getStudent()->getId()] = $chronometre;
+            }
+
+            return $this->render('douchette/index.html.twig', [
+                'form' => $form->createView(),
+                'error_message' => $error_message,
+                'success_message' => $success_message,
+                'run_message' => $run_message,
+                'message' => $message,
+                'rows' => $rows,
+                'chronometres' => $chronometres
+            ]);
+        } else {
+            // Si le dernier run n'existe pas, affiche un message d'erreur
+            $run_message = "No runs found, please press Start and you can scan.";
+            $message = "The race hasn't started.";
+            return $this->render('douchette/index.html.twig', [
+                'form' => $form->createView(),
+                'error_message' => $error_message,
+                'success_message' => $success_message,
+                'run_message' => $run_message,
+                'message' => $message,
+                'rows' => $rows,
+                'chronometres' => []
+            ]);
         }
-
-        return $this->render('douchette/index.html.twig', [
-            'form' => $form->createView(),
-            'error_message' => $error_message,
-            'success_message' => $success_message,
-            'rows' => $rows,
-            'chronometres' => $chronometres
-        ]);
     }
 }
 
