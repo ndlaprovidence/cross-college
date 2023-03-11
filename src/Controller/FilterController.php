@@ -8,6 +8,7 @@ use App\Repository\GradeRepository;
 use App\Repository\FilterRepository;
 use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -15,37 +16,38 @@ class FilterController extends AbstractController
 {
 
     #[Route('/filter', name: 'app_filter')]
-    public function index(FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository): Response
-    {
-        $error_message = "";
-        $rows = array();
+    public function index(Request $request, FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository): Response
+{
+    $error_message = "";
+    $rows = array();
 
-        $rows = $filterRepository->findStudentsWithGrades();
-        $grades = $gradeRepository->findAll();
-        $students = $studentRepository->findAll();
+    $rows = $filterRepository->findStudentsWithGrades();
+    $grades = $gradeRepository->findAll();
+    $students = $studentRepository->findAll();
+    $levels = array(6, 5, 4, 3);
+    $genders = array('F', 'G');
 
-        return $this->render('filter/index.html.twig', [
-            'rows' => $rows,
-            'grades' => $grades,
-            'students' => $students,
-            'levels' => array(6, 5, 4, 3),
-            'genders' => array('F', 'G'),
-            'error_message' => $error_message,
-        ]);
+    if ($request->isMethod('GET')) {
+        $gradeShortname = $request->request->get('grades');
+        $level = $request->request->get('levels');
+        $gender = $request->request->get('genders');
+
+        // $criteria = array();
+    
+        if (!empty($gradeShortname) || !empty($level) || !empty($gender)) {
+            $rows = $filterRepository->findStudentsWithGrades($gradeShortname, $level, $gender);
+        } else {
+            $rows = $filterRepository->findStudentsWithGrades();
+        }
     }
-    public function new(Request $request): Response
-    {
-        // creates a task object and initializes some data for this example
-        $task = new Task();
-        $task->setTask('Write a blog post');
-        $task->setDueDate(new \DateTime('tomorrow'));
 
-        $form = $this->createFormBuilder($task)
-            ->add('task', TextType::class)
-            ->add('dueDate', DateType::class)
-            ->add('save', SubmitType::class, ['label' => 'Create Task'])
-            ->getForm();
-
-        // ...
-    }
+    return $this->render('filter/index.html.twig', [
+        'rows' => $rows,
+        'grades' => $grades,
+        'students' => $students,
+        'levels' => array(6, 5, 4, 3),
+        'genders' => array('F', 'G'),
+        'error_message' => $error_message,
+    ]);
+}
 }

@@ -25,31 +25,28 @@
         <th><label> Gender</label></th>
         <tr>
             <td>
-                <select id='grade' name='grades'>
-                    <option id='grade'></option>
-                    {% for grade in grades %}
-                    <option id='grade' value='{{ grade.shortname }}'>{{ grade.shortname }}</option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td>
-                <select id='level' name='levels'>
-                    <option id='level'></option>
-                    {% for level in levels %}
-                    <option  id='level' value='{{ level }}'>{{ level }}</option>
-                        {% endfor %}
-                </select>
-            </td>
-            <td>
-                <select id='gender' name='genders'>
-                    <option id='gender'></option>
-                    {% for gender in genders %}
-                    <option  id='gender' value='{{ gender }}'>{{ gender }}</option>
-                        {% endfor %}
-                </select>
-            </td>
-            <td><input type="submit"/></td>
-        </tr>
+           <form method="get" action="{{ path('app_filter') }}">
+    <select name="grades">
+        <option value="">-- Sélectionner une grade --</option>
+        {% for grade in grades %}
+        <option value="{{ grade.shortname }}">{{ grade.shortname }}</option>
+        {% endfor %}
+    </select>
+    <select name="levels">
+        <option value="">-- Sélectionner un level --</option>
+        {% for level in levels %}
+        <option value="{{ level }}">{{ level }}</option>
+        {% endfor %}
+    </select>
+    <select name="genders">
+        <option value="">-- Sélectionner un gender --</option>
+        {% for gender in genders %}
+        <option value="{{ gender }}">{{ gender }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Envoyer">
+</form>
+        {# </tr> #}
     </table>
 
     <br /><br />

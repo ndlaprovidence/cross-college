@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Ranking;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PDOException;
+use Doctrine\DBAL\Statement;
 
 /**
  * @extends ServiceEntityRepository<Ranking>
@@ -42,46 +44,37 @@ class FilterRepository extends ServiceEntityRepository
     /**
     * @return array Returns an array of Ranking objects
     */
-    public function findStudentsWithGrades(): array
+    public function findStudentsWithGrades(string $gradeShortname = null, int $level = null, string $gender = null): array
     {
-        $conn = $this->getEntityManager()->getConnection();
+        $entityManager = $this->getEntityManager();
+        $conn = $entityManager->getConnection();
+        $sql = $entityManager->createQuery = "SELECT student.id, student.lastname, student.firstname, grade.shortname, grade.level, student.gender
 
-        $sql = '
-            SELECT tbl_student.id, tbl_student.lastname, tbl_student.firstname, tbl_student.gender, tbl_grade.shortname, tbl_grade.`level`
-            FROM tbl_student, tbl_grade
-            WHERE tbl_student.grade_id=tbl_grade.id
-            ';
+        FROM tbl_student AS student
+        JOIN tbl_grade AS grade ON grade.id = student.grade_id
+        WHERE 1 = 1";
+        $params = array();
+
+        if (!empty($gradeShortname)) {
+            $sql .= " AND grade.shortname = ?";
+            $params[] = $gradeShortname;
+        }
+    
+        if (!empty($level)) {
+            $sql .= " AND grade.level = ?";
+            $params[] = $level;
+        }
+    
+        if (!empty($gender)) {
+            $sql .= " AND student.gender = ?";
+            $params[] = $gender;
+        }
+    
+        $sql .= " ORDER BY grade.shortname ASC, grade.level DESC, student.lastname ASC";
         $stmt = $conn->prepare($sql);
-        // $resultSet = $stmt->executeQuery(['price' => $price]);
-        $resultSet = $stmt->executeQuery();
-
-        // returns an array of arrays (i.e. a raw data set)
+        $resultSet = $stmt->executeQuery($params);
+        
         return $resultSet->fetchAllAssociative();
     }
-
-//    /**
-//     * @return Ranking[] Returns an array of Ranking objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Ranking
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
 
