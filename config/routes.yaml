@@ -5,3 +5,8 @@ controllers:
 app_lucky_number:
     path: /lucky/number
     controller: App\Controller\LuckyController::number
+
+app_student_delete_all:
+    path: '/students/delete-all'
+    controller: App\Controller\StudentController::deleteAll
+    methods: ['POST']

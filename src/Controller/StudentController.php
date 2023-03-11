@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Student;
 use App\Form\StudentType;
 use App\Repository\StudentRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/student')]
 class StudentController extends AbstractController
@@ -139,13 +141,31 @@ class StudentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_student_delete', methods: ['POST'])]
-    public function delete(Request $request, Student $student, StudentRepository $studentRepository): Response
+    #[Route('/delete-all', name: 'app_student_delete_all', methods: ['GET', 'POST'])]
+    public function deleteAll(Request $request, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
-            $studentRepository->remove($student, true);
-        }
+        $form = $this->createFormBuilder()
+            ->add('confirm', HiddenType::class)
+            ->getForm();
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
+        $entityManager->createQueryBuilder()
+            ->delete(Student::class)
+            ->getQuery()
+            ->execute();
+
+        $this->addFlash('success', 'Tous les étudiants ont été supprimés avec succès.');
+    
+        return $this->redirectToRoute('app_student_index');
     }
+
+    // #[Route('/{id}', name: 'app_student_delete', methods: ['POST'])]
+    // public function delete(Request $request, Student $student, StudentRepository $studentRepository): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
+    //         $studentRepository->remove($student, true);
+    //     }
+
+    //     return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
+    // }
 }

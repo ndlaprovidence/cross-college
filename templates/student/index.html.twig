@@ -1,43 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Student index{% endblock %}
+{% block title %}Student index
+{% endblock %}
 
 {% block body %}
-    <h1>Student index</h1>
+	<h1>Student index</h1>
+	<a href="{{ path('app_student_new') }}" class="btn btn-primary btn-lg" role="button">Create new</a>
+	<br>
+	<a href="#" class="btn btn-primary btn-lg" role="button">Exporter la liste des étudiants</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Lastname</th>
+				<th>Firstname</th>
+				<th>Gender</th>
+				<th>Mas</th>
+				<th>Objective</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for student in students %}
+				<tr>
+					<td>{{ student.id }}</td>
+					<td>{{ student.lastname }}</td>
+					<td>{{ student.firstname }}</td>
+					<td>{{ student.gender }}</td>
+					<td>{{ student.mas }}</td>
+					<td>{{ student.objective ? student.objective|date('H:i:s') : '' }}</td>
+					<td>
+						<a href="{{ path('app_student_show', {'id': student.id}) }}" class="btn btn-primary btn-lg" role="button">show</a>
+						<a href="{{ path('app_student_edit', {'id': student.id}) }}" class="btn btn-primary btn-lg" role="button">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Lastname</th>
-                <th>Firstname</th>
-                <th>Gender</th>
-                <th>Mas</th>
-                <th>Objective</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for student in students %}
-            <tr>
-                <td>{{ student.id }}</td>
-                <td>{{ student.lastname }}</td>
-                <td>{{ student.firstname }}</td>
-                <td>{{ student.gender }}</td>
-                <td>{{ student.mas }}</td>
-                <td>{{ student.objective ? student.objective|date('H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_student_show', {'id': student.id}) }}" class="btn btn-primary btn-lg" role="button">show</a>
-                    <a href="{{ path('app_student_edit', {'id': student.id}) }}" class="btn btn-primary btn-lg" role="button">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_student_new') }}" class="btn btn-primary btn-lg" role="button">Create new</a>
+	<form action="{{ path('app_student_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all students?');">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+		<button type="submit" class="btn btn-danger">Vider toutes les données de la table "Student"</button>
+	</form>
 {% endblock %}

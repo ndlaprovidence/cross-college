@@ -103,4 +103,8 @@ class Grade
 
         return $this;
     }
+
+    public function __toString() {
+        return $this->id;
+    }
 }
