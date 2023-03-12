@@ -27,6 +27,7 @@ class DouchetteController extends AbstractController
         $error_message = "";
         $success_message = "";
         $run_message = "";
+        $note = "";
         date_default_timezone_set('Europe/Paris');
         $identifiant = "";
         $form = $this->createFormBuilder()
@@ -109,7 +110,7 @@ class DouchetteController extends AbstractController
             $start = $startDateTime->format("Y-m-d H:i:s");
             $message = "The race started on " . $start . "";
 
-            $run_message .= "Run found.";
+            $run_message .= "Run found, you can scan.";
 
             $chronometres = array();
             foreach ($rows as $row) {
@@ -123,7 +124,31 @@ class DouchetteController extends AbstractController
                 $minutes = $diff->i;
                 $seconds = $diff->s;
 
+                $totalSeconds = $hours * 3600 + $minutes * 60 + $seconds;
+                $objective = 7200; // objectif de 2 heures
+
                 $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+
+                if ($totalSeconds <= $objective-50) {
+                    $note = "20/20";
+                } elseif ($totalSeconds <= $objective-40) {
+                    $note = "19/20";
+                } elseif ($totalSeconds <= $objective-30) {
+                    $note = "18/20";
+                } elseif ($totalSeconds <= $objective-20) {
+                    $note = "17/20";
+                } elseif ($totalSeconds <= $objective-10) {
+                    $note = "16/20";
+                } elseif ($totalSeconds <= $objective){
+                    $note = "15/20";
+                } else {
+                    $note = "";
+                }
+                
+                $chronometres[$row->getStudent()->getId()] = array(
+                    "time" => $chronometre,
+                    "note" => $note
+                );
 
                 $chronometres[$row->getStudent()->getId()] = $chronometre;
             }
@@ -135,7 +160,8 @@ class DouchetteController extends AbstractController
                 'run_message' => $run_message,
                 'message' => $message,
                 'rows' => $rows,
-                'chronometres' => $chronometres
+                'chronometres' => $chronometres,
+                'note' => $note
             ]);
         } else {
             // Si le dernier run n'existe pas, affiche un message d'erreur

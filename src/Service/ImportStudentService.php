@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service;
+use DateTime;
 use App\Entity\Grade;
 use League\Csv\Reader;
 use App\Entity\Student;
@@ -79,7 +80,11 @@ class ImportStudentService
             ->setFirstname($arrayStudent['Prénom'])
             ->setGender($arrayStudent['SEXE'])
             ->setMas(floatval($arrayStudent['VMA']));
-            // ->setObjective($arrayStudent['OBJECTIVE']);
+        
+        $objective = DateTime::createFromFormat('H:i:s', $arrayStudent['OBJECTIVE']);
+        if ($objective !== false) {
+            $student->setObjective($objective);
+        }
 
         $grade = $this->gradeRepository->findOneBy(['shortname' => $arrayStudent['CLASSE']]);
         if (!$grade) {
