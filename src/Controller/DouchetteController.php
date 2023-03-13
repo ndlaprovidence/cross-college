@@ -126,7 +126,7 @@ class DouchetteController extends AbstractController
                 $secondsChronometre = $diffChronometre->s;
 
                 $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
-                // $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 9, 15);
+                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 10, 15);
                 $chronometre2 = new DateTime($chronometre);
 
                 $student = $row->getStudent();
@@ -134,8 +134,9 @@ class DouchetteController extends AbstractController
 
                 $secondsNote = $objective->getTimestamp() - $chronometre2->getTimestamp();
 
+
                 if ($secondsNote < 0) {
-                    $note = "";
+                    $note = null;
                 } else {
                     if ($secondsNote == 0) {
                         $note = 15;
@@ -160,6 +161,10 @@ class DouchetteController extends AbstractController
                         }
                     }
                 }
+
+                $student->setNote($note);
+                $studentRepository->save($student, true);
+
 
                 $chronometres[$row->getStudent()->getId()] = $chronometre;
             }

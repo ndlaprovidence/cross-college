@@ -45,7 +45,7 @@
 				<td>{{ classement }}</td>
 				<td>{{ row.student.firstname }} {{ row.student.lastname }}</td>
 				<td>{{ row.student.grade.level }}</td>
-				<td>{{ chronometres[row.getStudent().getId()] }}</td>
+				<td>{{ chronometres[row.getStudent().getId()]|date("H:i:s") }}</td>
 				<td>{{ row.student.mas }}</td>
 				<td>{{ row.student.objective|date("H:i:s") }}</td>
 				<td>{{ note }}</td>

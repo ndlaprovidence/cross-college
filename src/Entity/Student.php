@@ -40,6 +40,9 @@ class Student
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $objective = null;
 
+    #[ORM\Column]
+    private ?int $Note = null;
+
     public function __construct()
     {
         $this->rankings = new ArrayCollection();
@@ -155,5 +158,17 @@ class Student
     public function __toString() {
         return $this->id;
         return $this->objective;
+    }
+
+    public function getNote(): ?int
+    {
+        return $this->Note;
+    }
+
+    public function setNote(int $Note): self
+    {
+        $this->Note = $Note;
+
+        return $this;
     }
 }
