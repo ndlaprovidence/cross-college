@@ -9,6 +9,7 @@ use App\Entity\Student;
 use App\Repository\RunRepository;
 use App\Repository\RankingRepository;
 use App\Repository\StudentRepository;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,6 @@ class DouchetteController extends AbstractController
         $error_message = "";
         $success_message = "";
         $run_message = "";
-        $note = "";
         date_default_timezone_set('Europe/Paris');
         $identifiant = "";
         $form = $this->createFormBuilder()
@@ -66,36 +66,36 @@ class DouchetteController extends AbstractController
                 // L'étudiant a déjà été ajouté à la table tbl_ranking pour cette course
                 $error_message .= "Runner already added.";
             } else {
-            $success_message .= "Runner added.";
-            $end = date("Y-m-d H:i:s");
+                $success_message .= "Runner added.";
+                $end = date("Y-m-d H:i:s");
 
-            $run = $runRepository->getLast();
-            $startDateTime = $run->getStart();
-            $start = $startDateTime->format("Y-m-d H:i:s");
+                $run = $runRepository->getLast();
+                $startDateTime = $run->getStart();
+                $start = $startDateTime->format("Y-m-d H:i:s");
 
-            $ranking = new Ranking();
-            $ranking->setStudent($student);
-            $ranking->setEnd(new \DateTime($end));
-            $ranking->setRun($run);
-            $rankingRepository->save($ranking, true);
+                $ranking = new Ranking();
+                $ranking->setStudent($student);
+                $ranking->setEnd(new \DateTime($end));
+                $ranking->setRun($run);
+                $rankingRepository->save($ranking, true);
             }
 
             $form = $this->createFormBuilder()
-            ->add('identifiant', TextType::class, [
-                'label' => 'Barcode',
-                'attr' => [
-                    'readonly' => false,
-                ],
-                'constraints' => [
-                    new Length([
-                        'min' => 1,
-                        'max' => 4,
-                        'maxMessage' => 'This value is too long. It should have 4 characters or less',
-                    ]),
-                    new UpperCase(),
-                ],
-            ])
-            ->getForm();
+                ->add('identifiant', TextType::class, [
+                    'label' => 'Barcode',
+                    'attr' => [
+                        'readonly' => false,
+                    ],
+                    'constraints' => [
+                        new Length([
+                            'min' => 1,
+                            'max' => 4,
+                            'maxMessage' => 'This value is too long. It should have 4 characters or less',
+                        ]),
+                        new UpperCase(),
+                    ],
+                ])
+                ->getForm();
         } else {
             $error_message .= "Runner not found.";
             $student = new Student();
@@ -106,6 +106,7 @@ class DouchetteController extends AbstractController
 
         $run = $runRepository->getLast();
         if ($run !== null) {
+            $note = null;
             $startDateTime = $run->getStart();
             $start = $startDateTime->format("Y-m-d H:i:s");
             $message = "The race started on " . $start . "";
@@ -118,37 +119,47 @@ class DouchetteController extends AbstractController
                 $end = $endDateTime->format("Y-m-d H:i:s");
                 $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
 
-                $diff = $startDateTime->diff($endDateTime);
+                $diffChronometre = $startDateTime->diff($endDateTime);
 
-                $hours = $diff->h;
-                $minutes = $diff->i;
-                $seconds = $diff->s;
+                $hoursChronometre = $diffChronometre->h;
+                $minutesChronometre = $diffChronometre->i;
+                $secondsChronometre = $diffChronometre->s;
 
-                $totalSeconds = $hours * 3600 + $minutes * 60 + $seconds;
-                $objective = 7200; // objectif de 2 heures
+                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
+                // $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 9, 15);
+                $chronometre2 = new DateTime($chronometre);
 
-                $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+                $student = $row->getStudent();
+                $objective = $student->getObjective();
 
-                if ($totalSeconds <= $objective-50) {
-                    $note = "20/20";
-                } elseif ($totalSeconds <= $objective-40) {
-                    $note = "19/20";
-                } elseif ($totalSeconds <= $objective-30) {
-                    $note = "18/20";
-                } elseif ($totalSeconds <= $objective-20) {
-                    $note = "17/20";
-                } elseif ($totalSeconds <= $objective-10) {
-                    $note = "16/20";
-                } elseif ($totalSeconds <= $objective){
-                    $note = "15/20";
-                } else {
+                $secondsNote = $objective->getTimestamp() - $chronometre2->getTimestamp();
+
+                if ($secondsNote < 0) {
                     $note = "";
+                } else {
+                    if ($secondsNote == 0) {
+                        $note = 15;
+                    } else {
+                        switch (round($secondsNote / 10)) {
+                            case 0:
+                                $note = 16;
+                                break;
+                            case 1:
+                                $note = 17;
+                                break;
+                            case 2:
+                                $note = 18;
+                                break;
+                            case 3:
+                                $note = 19;
+                                break;
+
+                            default:
+                                $note = 20;
+                                break;
+                        }
+                    }
                 }
-                
-                $chronometres[$row->getStudent()->getId()] = array(
-                    "time" => $chronometre,
-                    "note" => $note
-                );
 
                 $chronometres[$row->getStudent()->getId()] = $chronometre;
             }
