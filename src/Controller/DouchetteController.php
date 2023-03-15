@@ -125,8 +125,8 @@ class DouchetteController extends AbstractController
                 $minutesChronometre = $diffChronometre->i;
                 $secondsChronometre = $diffChronometre->s;
 
-                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
-                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 10, 15);
+                // $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
+                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 9, 50);
                 $chronometre2 = new DateTime($chronometre);
 
                 $student = $row->getStudent();
@@ -134,33 +134,30 @@ class DouchetteController extends AbstractController
 
                 $secondsNote = $objective->getTimestamp() - $chronometre2->getTimestamp();
 
-
-                if ($secondsNote < 0) {
+                if (abs($secondsNote) <= 15) {
+                    $note = 15;
+                } else if ($secondsNote < 0) {
                     $note = null;
                 } else {
-                    if ($secondsNote == 0) {
-                        $note = 15;
-                    } else {
-                        switch (round($secondsNote / 10)) {
-                            case 0:
-                                $note = 16;
-                                break;
-                            case 1:
-                                $note = 17;
-                                break;
-                            case 2:
-                                $note = 18;
-                                break;
-                            case 3:
-                                $note = 19;
-                                break;
-
-                            default:
-                                $note = 20;
-                                break;
-                        }
+                    switch (round($secondsNote / 10)) {
+                        case 0:
+                            $note = 16;
+                            break;
+                        case 1:
+                            $note = 17;
+                            break;
+                        case 2:
+                            $note = 18;
+                            break;
+                        case 3:
+                            $note = 19;
+                            break;
+                        default:
+                            $note = 20;
+                            break;
                     }
                 }
+
 
                 $student->setNote($note);
                 $studentRepository->save($student, true);

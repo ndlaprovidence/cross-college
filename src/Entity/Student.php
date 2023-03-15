@@ -40,8 +40,8 @@ class Student
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $objective = null;
 
-    #[ORM\Column]
-    private ?int $Note = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $note = null;
 
     public function __construct()
     {
@@ -162,12 +162,12 @@ class Student
 
     public function getNote(): ?int
     {
-        return $this->Note;
+        return $this->note;
     }
 
-    public function setNote(int $Note): self
+    public function setNote(?int $note): self
     {
-        $this->Note = $Note;
+        $this->note = $note;
 
         return $this;
     }
