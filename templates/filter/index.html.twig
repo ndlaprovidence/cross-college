@@ -27,21 +27,21 @@
             <td>
            <form method="get" action="{{ path('app_filter') }}">
     <select name="grades">
-        <option value="">-- Sélectionner une grade --</option>
+        <option value="">-- Select a grade --</option>
         {% for grade in grades %}
-        <option value="{{ grade.shortname }}">{{ grade.shortname }}</option>
+        <option value="{{ grade.shortname }}"{% if grade==grade_checked %}selected{% endif%}>{{ grade.shortname }}</option>
         {% endfor %}
     </select>
     <select name="levels">
-        <option value="">-- Sélectionner un level --</option>
+        <option value="">-- Select a level --</option>
         {% for level in levels %}
-        <option value="{{ level }}">{{ level }}</option>
+        <option value="{{ level }}" {% if level==level_checked %}selected{% endif%}>{{ level }}</option>
         {% endfor %}
     </select>
     <select name="genders">
-        <option value="">-- Sélectionner un gender --</option>
+        <option value="">-- Select a gender --</option>
         {% for gender in genders %}
-        <option value="{{ gender }}">{{ gender }}</option>
+        <option value="{{ gender }}" {% if gender==gender_checked %}selected{% endif%}>{{ gender }}</option>
         {% endfor %}
     </select>
     <input type="submit" value="Envoyer">

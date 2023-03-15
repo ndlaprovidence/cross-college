@@ -44,7 +44,7 @@ class FilterRepository extends ServiceEntityRepository
     /**
     * @return array Returns an array of Ranking objects
     */
-    public function findStudentsWithGrades(string $gradeShortname = null, int $level = null, string $gender = null): array
+    public function findStudentsWithGrades(string $grade = null, string $level = null, string $gender = null): array
     {
         $entityManager = $this->getEntityManager();
         $conn = $entityManager->getConnection();
@@ -55,9 +55,9 @@ class FilterRepository extends ServiceEntityRepository
         WHERE 1 = 1";
         $params = array();
 
-        if (!empty($gradeShortname)) {
+        if (!empty($grade)) {
             $sql .= " AND grade.shortname = ?";
-            $params[] = $gradeShortname;
+            $params[] = $grade;
         }
     
         if (!empty($level)) {
