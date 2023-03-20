@@ -126,18 +126,70 @@ class DouchetteController extends AbstractController
                 $secondsChronometre = $diffChronometre->s;
 
                 // $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
-                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 9, 50);
+                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 9, 34);
                 $chronometre2 = new DateTime($chronometre);
 
                 $student = $row->getStudent();
                 $objective = $student->getObjective();
 
                 $secondsNote = $objective->getTimestamp() - $chronometre2->getTimestamp();
-
+                // else if ($secondsNote < -15) {
+                //     $note = null;
+                // }
+                
                 if (abs($secondsNote) <= 15) {
                     $note = 15;
                 } else if ($secondsNote < 0) {
-                    $note = null;
+                    switch (floor(abs($secondsNote) / 15)) {
+                        case 0:
+                            $note = 15;
+                            break;
+                        case 1:
+                            $note = 14;
+                            break;
+                        case 2:
+                            $note = 13;
+                            break;
+                        case 3:
+                            $note = 12;
+                            break;
+                        case 4:
+                            $note = 11;
+                            break;
+                        case 5:
+                            $note = 10;
+                            break;
+                        case 6:
+                            $note = 9;
+                            break;
+                        case 7:
+                            $note = 8;
+                            break;
+                        case 8:
+                            $note = 7;
+                            break;
+                        case 9:
+                            $note = 6;
+                            break;
+                        case 10:
+                            $note = 5;
+                            break;
+                        case 11:
+                            $note = 4;
+                            break;
+                        case 12:
+                            $note = 3;
+                            break;
+                        case 13:
+                            $note = 2;
+                            break;
+                        case 14:
+                            $note = 1;
+                             break;
+                        default:
+                            $note = 0;
+                            break;                           
+                    }
                 } else {
                     switch (round($secondsNote / 10)) {
                         case 0:
@@ -156,12 +208,10 @@ class DouchetteController extends AbstractController
                             $note = 20;
                             break;
                     }
-                }
-
+                }                
 
                 $student->setNote($note);
                 $studentRepository->save($student, true);
-
 
                 $chronometres[$row->getStudent()->getId()] = $chronometre;
             }
