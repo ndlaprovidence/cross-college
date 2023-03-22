@@ -59,6 +59,8 @@ class FilterController extends AbstractController
         $levels = array(6, 5, 4, 3);
         $genders = array('F', 'G');
 
+        $chronometres = array(); // Définir une valeur par défaut
+
         if ($request->isMethod('GET')) {
             $grade = $request->query->get('grades');
             $level = $request->query->get('levels');
@@ -67,10 +69,10 @@ class FilterController extends AbstractController
             $run = $runRepository->getLast();
             $startDateTime = $run->getStart();
             $start = $startDateTime->format("Y-m-d H:i:s");
-            $chronometres = array();
+
             foreach ($rows as $row) {
-                dump($row);
-                $endDateTime = $row->getEnd();
+                $endDateTime = $row['end'];
+                $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $endDateTime);
                 $end = $endDateTime->format("Y-m-d H:i:s");
                 $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
 
@@ -80,9 +82,8 @@ class FilterController extends AbstractController
                 $minutesChronometre = $diffChronometre->i;
                 $secondsChronometre = $diffChronometre->s;
 
-                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
+                $chronometres[$row['id']] = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
             }
-            // $criteria = array();
 
             if (!empty($grade) || !empty($level) || !empty($gender)) {
                 $rows = $filterRepository->findStudentsWithGrades($grade, $level, $gender);
@@ -96,13 +97,12 @@ class FilterController extends AbstractController
             'grades' => $grades,
             'grade_checked' => $grade,
             'students' => $students,
-            'levels' => array(6, 5, 4, 3),
+            'levels' => $levels,
             'level_checked' => $level,
-            'genders' => array('F', 'G'),
+            'genders' => $genders,
             'gender_checked' => $gender,
             'error_message' => $error_message,
             'chronometres' => $chronometres,
-
         ]);
     }
 }

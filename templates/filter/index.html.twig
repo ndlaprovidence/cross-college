@@ -63,11 +63,11 @@
 			{% for row in rows %}
 				<tr>
 					<td>{{ classement }}</td>
-					<td>{{ row.firstname }} {{ row.lastname }}</td>
-					<td>{{ chronometres[row.id]|date("H:i:s") }}</td>
+					<td>{{ row.firstname }} {{ row.lastname }}</td>	
 					<td>{{ row.shortname }}</td>
 					<td>{{ row.level }}</td>
 					<td>{{ row.gender }}</td>
+					<td>{{ chronometres[row.id]|date("H:i:s") }}</td>
 				</tr>
 				{% set classement = classement + 1 %}
 			{% endfor %}
