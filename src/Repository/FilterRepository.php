@@ -47,10 +47,10 @@ class FilterRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
         $conn = $entityManager->getConnection();
         $sql = $entityManager->createQuery = "SELECT student.id, student.lastname, student.firstname, grade.shortname, grade.level, student.gender, ranking.end
-
+    
         FROM tbl_student AS student
         JOIN tbl_grade AS grade ON grade.id = student.grade_id
-        JOIN tbl_student AS student ON ranking.id = student.ranking_id
+        JOIN tbl_ranking AS ranking ON ranking.id = student.ranking_id
         WHERE 1 = 1";
         $params = array();
 
@@ -75,6 +75,7 @@ class FilterRepository extends ServiceEntityRepository
 
         return $resultSet->fetchAllAssociative();
     }
+
 
     //    /**
     //     * @return Ranking[] Returns an array of Ranking objects

@@ -28,7 +28,6 @@ class DouchetteController extends AbstractController
         $error_message = "";
         $success_message = "";
         $run_message = "";
-        $danger_message = "";
         date_default_timezone_set('Europe/Paris');
         $identifiant = "";
         $form = $this->createFormBuilder()

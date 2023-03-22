@@ -44,6 +44,6 @@ class Run
 
     // public function __toString()
     // {
-    //     return " Course n°" . $this->id;
+    //     return $this->start;
     // }
 }

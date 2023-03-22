@@ -69,6 +69,7 @@ class FilterController extends AbstractController
             $start = $startDateTime->format("Y-m-d H:i:s");
             $chronometres = array();
             foreach ($rows as $row) {
+                dump($row);
                 $endDateTime = $row->getEnd();
                 $end = $endDateTime->format("Y-m-d H:i:s");
                 $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
