@@ -59,11 +59,14 @@
 				<th scope="col">Genre</th>
 				<th scope="col">Chronomètre</th>
 			</tr>
+
+
 			{% set classement = 1 %}
 			{% for row in rows %}
 				<tr>
 					<td>{{ classement }}</td>
-					<td>{{ row.firstname }} {{ row.lastname }}</td>	
+					<td>{{ row.firstname }}
+						{{ row.lastname }}</td>
 					<td>{{ row.shortname }}</td>
 					<td>{{ row.level }}</td>
 					<td>{{ row.gender }}</td>
@@ -71,6 +74,20 @@
 				</tr>
 				{% set classement = classement + 1 %}
 			{% endfor %}
+			
+			{# {% set classement = 1 %}
+						{% for id, student in students %}
+							<tr>
+								<td>{{ classement }}</td>
+								<td>{{ student.firstname }}
+									{{ student.lastname }}</td>
+								<td>{{ student.shortname }}</td>
+								<td>{{ student.level }}</td>
+								<td>{{ student.gender }}</td>
+								<td>{{ chronometres[id]|date("H:i:s") }}</td>
+							</tr>
+							{% set classement = classement + 1 %}
+						{% endfor %} #}
 
 			{{ error_message }}
 		</table>

@@ -82,6 +82,8 @@ class FilterController extends AbstractController
                 $minutesChronometre = $diffChronometre->i;
                 $secondsChronometre = $diffChronometre->s;
 
+                // $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
+                // $chronometres[$row['id']] = sprintf("1970-01-01 %02d:%02d:%02d", 0, 11, 34);
                 $chronometres[$row['id']] = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
             }
 
