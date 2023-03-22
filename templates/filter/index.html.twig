@@ -29,7 +29,7 @@
     <select name="grades">
         <option value="">-- Select a grade --</option>
         {% for grade in grades %}
-        <option value="{{ grade.shortname }}"{% if grade==grade_checked %}selected{% endif%}>{{ grade.shortname }}</option>
+        <option value="{{ grade.shortname }}"{% if grade.shortname == grade_checked %}selected{% endif%}>{{ grade.shortname }}</option>
         {% endfor %}
     </select>
     <select name="levels">
