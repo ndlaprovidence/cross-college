@@ -50,7 +50,7 @@ class FilterRepository extends ServiceEntityRepository
     
         FROM tbl_student AS student
         JOIN tbl_grade AS grade ON grade.id = student.grade_id
-        JOIN tbl_ranking AS ranking ON ranking.id = student.ranking_id
+        JOIN tbl_ranking AS ranking ON ranking.id = ranking.id
         WHERE 1 = 1";
         $params = array();
 
