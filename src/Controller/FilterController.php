@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use PDO;
+use DateTime;
 use PDOException;
+use App\Repository\RunRepository;
 use App\Repository\GradeRepository;
 use App\Repository\FilterRepository;
 use App\Repository\StudentRepository;
@@ -62,14 +64,27 @@ class FilterController extends AbstractController
             $level = $request->query->get('levels');
             $gender = $request->query->get('genders');
 
+            $run = $runRepository->getLast();
+            $startDateTime = $run->getStart();
+            $start = $startDateTime->format("Y-m-d H:i:s");
+            $chronometres = array();
+            foreach ($rows as $row) {
+                $endDateTime = $row->getEnd();
+                $end = $endDateTime->format("Y-m-d H:i:s");
+                $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
+
+                $diffChronometre = $startDateTime->diff($endDateTime);
+
+                $hoursChronometre = $diffChronometre->h;
+                $minutesChronometre = $diffChronometre->i;
+                $secondsChronometre = $diffChronometre->s;
+
+                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
+            }
             // $criteria = array();
 
             if (!empty($grade) || !empty($level) || !empty($gender)) {
                 $rows = $filterRepository->findStudentsWithGrades($grade, $level, $gender);
-                $run = $runRepository->getLast();
-                $startDateTime = $run->getStart();
-                $start = $startDateTime->format("Y-m-d H:i:s");
-                $message = "La course a démarré le " . $start . "";
             } else {
                 $rows = $filterRepository->findStudentsWithGrades();
             }
@@ -85,6 +100,8 @@ class FilterController extends AbstractController
             'genders' => array('F', 'G'),
             'gender_checked' => $gender,
             'error_message' => $error_message,
+            'chronometres' => $chronometres,
+
         ]);
     }
 }

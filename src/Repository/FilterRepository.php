@@ -40,16 +40,17 @@ class FilterRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return array Returns an array of Ranking objects
-    */
+     * @return array Returns an array of Ranking objects
+     */
     public function findStudentsWithGrades(string $grade = null, string $level = null, string $gender = null): array
     {
         $entityManager = $this->getEntityManager();
         $conn = $entityManager->getConnection();
-        $sql = $entityManager->createQuery = "SELECT student.id, student.lastname, student.firstname, grade.shortname, grade.level, student.gender
+        $sql = $entityManager->createQuery = "SELECT student.id, student.lastname, student.firstname, grade.shortname, grade.level, student.gender, ranking.end
 
         FROM tbl_student AS student
         JOIN tbl_grade AS grade ON grade.id = student.grade_id
+        JOIN tbl_student AS student ON ranking.id = student.ranking_id
         WHERE 1 = 1";
         $params = array();
 
@@ -57,47 +58,46 @@ class FilterRepository extends ServiceEntityRepository
             $sql .= " AND grade.shortname = ?";
             $params[] = $grade;
         }
-    
+
         if (!empty($level)) {
             $sql .= " AND grade.level = ?";
             $params[] = $level;
         }
-    
+
         if (!empty($gender)) {
             $sql .= " AND student.gender = ?";
             $params[] = $gender;
         }
-    
+
         $sql .= " ORDER BY grade.shortname ASC, grade.level DESC, student.lastname ASC";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery($params);
-        
+
         return $resultSet->fetchAllAssociative();
     }
 
-//    /**
-//     * @return Ranking[] Returns an array of Ranking objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Ranking[] Returns an array of Ranking objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('r')
+    //            ->andWhere('r.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('r.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Ranking
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Ranking
+    //    {
+    //        return $this->createQueryBuilder('r')
+    //            ->andWhere('r.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
-

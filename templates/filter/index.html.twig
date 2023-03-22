@@ -50,24 +50,26 @@
 		</table>
 
 		<br/><br/>
-		<table border="1">
+		<table class="table">
 			<tr>
-				<th>Numéro</th>
-				<th>Nom</th>
-				<th>Prénom</th>
-				<th>Classe</th>
-				<th>Catégorie</th>
-				<th>Genre</th>
+				<th scope="col">Classement</th>
+				<th scope="col">Elève</th>
+				<th scope="col">Classe</th>
+				<th scope="col">Catégorie</th>
+				<th scope="col">Genre</th>
+				<th scope="col">Chronomètre</th>
 			</tr>
+			{% set classement = 1 %}
 			{% for row in rows %}
 				<tr>
-					<td>{{ row.id }}</td>
-					<td>{{ row.lastname }}</td>
-					<td>{{ row.firstname }}</td>
+					<td>{{ classement }}</td>
+					<td>{{ row.firstname }} {{ row.lastname }}</td>
+					<td>{{ chronometres[row.id]|date("H:i:s") }}</td>
 					<td>{{ row.shortname }}</td>
 					<td>{{ row.level }}</td>
 					<td>{{ row.gender }}</td>
 				</tr>
+				{% set classement = classement + 1 %}
 			{% endfor %}
 
 			{{ error_message }}
