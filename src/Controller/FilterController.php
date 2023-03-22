@@ -46,7 +46,7 @@ class FilterController extends AbstractController
     */
 
     #[Route('/filter', name: 'app_filter')]
-    public function index(Request $request, FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository, RunRepository $runRepository): Response
+    public function index(Request $request, FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository): Response
     {
         $error_message = "";
         $rows = array();
@@ -66,10 +66,7 @@ class FilterController extends AbstractController
 
             if (!empty($grade) || !empty($level) || !empty($gender)) {
                 $rows = $filterRepository->findStudentsWithGrades($grade, $level, $gender);
-                $run = $runRepository->getLast();
-                $startDateTime = $run->getStart();
-                $start = $startDateTime->format("Y-m-d H:i:s");
-                $message = "La course a démarré le " . $start . "";
+        
             } else {
                 $rows = $filterRepository->findStudentsWithGrades();
             }

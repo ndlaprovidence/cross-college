@@ -74,6 +74,15 @@ class FilterRepository extends ServiceEntityRepository
         
         return $resultSet->fetchAllAssociative();
     }
+    
+    public function export(Ranking $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 
 //    /**
 //     * @return Ranking[] Returns an array of Ranking objects
