@@ -42,20 +42,36 @@ class FilterRepository extends ServiceEntityRepository
     /**
     * @return array Returns an array of Ranking objects
     */
-    public function findStudentsWithGrades(): array
+    public function findStudentsWithGrades(string $grade = null, string $level = null, string $gender = null): array
     {
-        $conn = $this->getEntityManager()->getConnection();
+        $entityManager = $this->getEntityManager();
+        $conn = $entityManager->getConnection();
+        $sql = $entityManager->createQuery = "SELECT student.id, student.lastname, student.firstname, grade.shortname, grade.level, student.gender
 
-        $sql = '
-            SELECT tbl_student.id, tbl_student.lastname, tbl_student.firstname, tbl_student.gender, tbl_grade.shortname, tbl_grade.`level`
-            FROM tbl_student, tbl_grade
-            WHERE tbl_student.grade_id=tbl_grade.id
-            ';
+        FROM tbl_student AS student
+        JOIN tbl_grade AS grade ON grade.id = student.grade_id
+        WHERE 1 = 1";
+        $params = array();
+
+        if (!empty($grade)) {
+            $sql .= " AND grade.shortname = ?";
+            $params[] = $grade;
+        }
+    
+        if (!empty($level)) {
+            $sql .= " AND grade.level = ?";
+            $params[] = $level;
+        }
+    
+        if (!empty($gender)) {
+            $sql .= " AND student.gender = ?";
+            $params[] = $gender;
+        }
+    
+        $sql .= " ORDER BY grade.shortname ASC, grade.level DESC, student.lastname ASC";
         $stmt = $conn->prepare($sql);
-        // $resultSet = $stmt->executeQuery(['price' => $price]);
-        $resultSet = $stmt->executeQuery();
-
-        // returns an array of arrays (i.e. a raw data set)
+        $resultSet = $stmt->executeQuery($params);
+        
         return $resultSet->fetchAllAssociative();
     }
 

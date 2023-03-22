@@ -28,6 +28,7 @@ class DouchetteController extends AbstractController
         $error_message = "";
         $success_message = "";
         $run_message = "";
+        $danger_message = "";
         date_default_timezone_set('Europe/Paris');
         $identifiant = "";
         $form = $this->createFormBuilder()
@@ -126,7 +127,7 @@ class DouchetteController extends AbstractController
                 $secondsChronometre = $diffChronometre->s;
 
                 // $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
-                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 9, 34);
+                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 11, 34);
                 $chronometre2 = new DateTime($chronometre);
 
                 $student = $row->getStudent();
@@ -224,7 +225,7 @@ class DouchetteController extends AbstractController
                 'message' => $message,
                 'rows' => $rows,
                 'chronometres' => $chronometres,
-                'note' => $note
+                'note' => $note,
             ]);
         } else {
             // Si le dernier run n'existe pas, affiche un message d'erreur
@@ -245,7 +246,7 @@ class DouchetteController extends AbstractController
 
 class UpperCase extends Constraint
 {
-    public $message = 'Veuillez activer votre touche Majuscule "MAJ" sur votre clavier.';
+    public $message = 'Please activate your shift key "SHIFT" on your keyboard.';
 
     public function validatedBy()
     {
