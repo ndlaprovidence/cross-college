@@ -8,6 +8,7 @@ use PDOException;
 use App\Repository\RunRepository;
 use App\Repository\GradeRepository;
 use App\Repository\FilterRepository;
+use App\Repository\RankingRepository;
 use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,7 @@ class FilterController extends AbstractController
     */
 
     #[Route('/filter', name: 'app_filter')]
-    public function index(Request $request, FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository, RunRepository $runRepository): Response
+    public function index(Request $request, FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository, RunRepository $runRepository, RankingRepository $rankingRepository, $sort = 'asc'): Response
     {
         $error_message = "";
         $rows = array();
@@ -59,33 +60,27 @@ class FilterController extends AbstractController
         $levels = array(6, 5, 4, 3);
         $genders = array('F', 'G');
 
-        $chronometres = array(); // Définir une valeur par défaut
+        $chronos = array();
+        if ($students) {
+            foreach ($students as $student) {
+                $studentRanking = $rankingRepository->findOneBy(array('student' => $student));
+                if ($studentRanking) {
+                    $chrono = $studentRanking->getChronometre();
+                    $chronos[$student->getId()] = $chrono;
+                }
+            }
+
+            if ($sort == 'asc') {
+                asort($chronos);
+            } else {
+                arsort($chronos);
+            }
+        }
 
         if ($request->isMethod('GET')) {
             $grade = $request->query->get('grades');
             $level = $request->query->get('levels');
             $gender = $request->query->get('genders');
-
-            $run = $runRepository->getLast();
-            $startDateTime = $run->getStart();
-            $start = $startDateTime->format("Y-m-d H:i:s");
-
-            foreach ($rows as $row) {
-                $endDateTime = $row['end'];
-                $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $endDateTime);
-                $end = $endDateTime->format("Y-m-d H:i:s");
-                $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
-
-                $diffChronometre = $startDateTime->diff($endDateTime);
-
-                $hoursChronometre = $diffChronometre->h;
-                $minutesChronometre = $diffChronometre->i;
-                $secondsChronometre = $diffChronometre->s;
-
-                // $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
-                // $chronometres[$row['id']] = sprintf("1970-01-01 %02d:%02d:%02d", 0, 11, 34);
-                $chronometres[$row['id']] = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
-            }
 
             if (!empty($grade) || !empty($level) || !empty($gender)) {
                 $rows = $filterRepository->findStudentsWithGrades($grade, $level, $gender);
@@ -104,7 +99,7 @@ class FilterController extends AbstractController
             'genders' => $genders,
             'gender_checked' => $gender,
             'error_message' => $error_message,
-            'chronometres' => $chronometres,
+            'chronos' => $chronos,
         ]);
     }
 }

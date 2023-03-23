@@ -27,6 +27,9 @@ class Ranking
     #[ORM\ManyToOne]
     private ?Run $run = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $chronometre = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,5 +73,17 @@ class Ranking
 
     public function __toString() {
         return $this->run;
+    }
+
+    public function getChronometre(): ?\DateTimeInterface
+    {
+        return $this->chronometre;
+    }
+
+    public function setChronometre(?\DateTimeInterface $chronometre): self
+    {
+        $this->chronometre = $chronometre;
+
+        return $this;
     }
 }

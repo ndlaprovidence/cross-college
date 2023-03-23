@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230315191209 extends AbstractMigration
+final class Version20230323095314 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,12 @@ final class Version20230315191209 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE tbl_student CHANGE note note INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE tbl_ranking ADD chronometre DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE tbl_student CHANGE note note INT NOT NULL');
+        $this->addSql('ALTER TABLE tbl_ranking DROP chronometre');
     }
 }

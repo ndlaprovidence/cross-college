@@ -46,11 +46,11 @@ class FilterRepository extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
         $conn = $entityManager->getConnection();
-        $sql = $entityManager->createQuery = "SELECT student.id, student.lastname, student.firstname, grade.shortname, grade.level, student.gender, ranking.end
+        $sql = $entityManager->createQuery = "SELECT student.id, student.lastname, student.firstname, grade.shortname, grade.level, student.gender
     
         FROM tbl_student AS student
         JOIN tbl_grade AS grade ON grade.id = student.grade_id
-        JOIN tbl_ranking AS ranking ON ranking.id = ranking.id
+
         WHERE 1 = 1";
         $params = array();
 

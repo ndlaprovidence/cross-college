@@ -70,24 +70,28 @@
 					<td>{{ row.shortname }}</td>
 					<td>{{ row.level }}</td>
 					<td>{{ row.gender }}</td>
-					<td>{{ chronometres[row.id]|date("H:i:s") }}</td>
+					{% if chronos[row.id] is defined %}
+						<td>{{ chronos[row.id]|date("H:i:s") }}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
 				</tr>
 				{% set classement = classement + 1 %}
 			{% endfor %}
-			
+
 			{# {% set classement = 1 %}
-						{% for id, student in students %}
-							<tr>
-								<td>{{ classement }}</td>
-								<td>{{ student.firstname }}
-									{{ student.lastname }}</td>
-								<td>{{ student.shortname }}</td>
-								<td>{{ student.level }}</td>
-								<td>{{ student.gender }}</td>
-								<td>{{ chronometres[id]|date("H:i:s") }}</td>
-							</tr>
-							{% set classement = classement + 1 %}
-						{% endfor %} #}
+															{% for id, student in students %}
+																<tr>
+																	<td>{{ classement }}</td>
+																	<td>{{ student.firstname }}
+																		{{ student.lastname }}</td>
+																	<td>{{ student.shortname }}</td>
+																	<td>{{ student.level }}</td>
+																	<td>{{ student.gender }}</td>
+																	<td>{{ chronometres[id]|date("H:i:s") }}</td>
+																</tr>
+																{% set classement = classement + 1 %}
+															{% endfor %} #}
 
 			{{ error_message }}
 		</table>
