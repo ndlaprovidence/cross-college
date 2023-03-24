@@ -49,8 +49,8 @@ class FilterController extends AbstractController
     */
 
     #[Route('/filter', name: 'app_filter')]
-    public function index(Request $request, FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository, RunRepository $runRepository, RankingRepository $rankingRepository, $sort = 'asc'): Response
-    {
+    public function index(Request $request, FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository, RunRepository $runRepository, RankingRepository $rankingRepository): Response
+    {     
         $error_message = "";
         $rows = array();
 
@@ -59,23 +59,6 @@ class FilterController extends AbstractController
         $students = $studentRepository->findAll();
         $levels = array(6, 5, 4, 3);
         $genders = array('F', 'G');
-
-        $chronos = array();
-        if ($students) {
-            foreach ($students as $student) {
-                $studentRanking = $rankingRepository->findOneBy(array('student' => $student));
-                if ($studentRanking) {
-                    $chrono = $studentRanking->getChronometre();
-                    $chronos[$student->getId()] = $chrono;
-                }
-            }
-
-            if ($sort == 'asc') {
-                asort($chronos);
-            } else {
-                arsort($chronos);
-            }
-        }
 
         if ($request->isMethod('GET')) {
             $grade = $request->query->get('grades');
@@ -87,7 +70,7 @@ class FilterController extends AbstractController
             } else {
                 $rows = $filterRepository->findStudentsWithGrades();
             }
-        }
+        }  
 
         return $this->render('filter/index.html.twig', [
             'rows' => $rows,
@@ -99,7 +82,6 @@ class FilterController extends AbstractController
             'genders' => $genders,
             'gender_checked' => $gender,
             'error_message' => $error_message,
-            'chronos' => $chronos,
         ]);
     }
 }

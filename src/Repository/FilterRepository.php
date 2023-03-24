@@ -45,37 +45,35 @@ class FilterRepository extends ServiceEntityRepository
     public function findStudentsWithGrades(string $grade = null, string $level = null, string $gender = null): array
     {
         $entityManager = $this->getEntityManager();
-        $conn = $entityManager->getConnection();
-        $sql = $entityManager->createQuery = "SELECT student.id, student.lastname, student.firstname, grade.shortname, grade.level, student.gender
-    
-        FROM tbl_student AS student
-        JOIN tbl_grade AS grade ON grade.id = student.grade_id
 
-        WHERE 1 = 1";
-        $params = array();
+        $qb = $entityManager->createQueryBuilder();
+
+        $qb->select('s.id', 's.lastname', 's.firstname', 'g.shortname', 'g.level', 's.gender', 'r.chronometre')
+            ->from('App\Entity\Ranking', 'r')
+            ->join('r.student', 's')
+            ->join('s.grade', 'g');
 
         if (!empty($grade)) {
-            $sql .= " AND grade.shortname = ?";
-            $params[] = $grade;
+            $qb->andWhere('g.shortname = :grade')
+                ->setParameter('grade', $grade);
         }
 
         if (!empty($level)) {
-            $sql .= " AND grade.level = ?";
-            $params[] = $level;
+            $qb->andWhere('g.level = :level')
+                ->setParameter('level', $level);
         }
 
         if (!empty($gender)) {
-            $sql .= " AND student.gender = ?";
-            $params[] = $gender;
+            $qb->andWhere('s.gender = :gender')
+                ->setParameter('gender', $gender);
         }
 
-        $sql .= " ORDER BY grade.shortname ASC, grade.level DESC, student.lastname ASC";
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery($params);
+        $qb->orderBy('r.chronometre', 'ASC');
 
-        return $resultSet->fetchAllAssociative();
+        $query = $qb->getQuery();
+
+        return $query->getResult();
     }
-
 
     //    /**
     //     * @return Ranking[] Returns an array of Ranking objects
