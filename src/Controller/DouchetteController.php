@@ -243,7 +243,7 @@ class DouchetteController extends AbstractController
                 
                 $chronometres[$row->getStudent()->getId()] = new \DateTime($chronometre);  
 
-                //C'est pour récupérer les éléments de la dernière course
+                // C'est pour récupérer les éléments de la dernière course
                 $resultRepository = $doctrine->getRepository(Ranking::class);
                 $lastRun = $runRepository->getLast();
                 $rows = $resultRepository->findByRun($lastRun);
