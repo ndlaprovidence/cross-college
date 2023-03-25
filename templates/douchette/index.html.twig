@@ -28,6 +28,7 @@
 
 	<table class="table">
 		<tr>
+			<th scope="col">Id</th>
 			<th scope="col">Classement</th>
 			<th scope="col">Elève</th>
 			<th scope="col">Classe</th>
@@ -35,21 +36,27 @@
 			<th scope="col">VMA</th>
 			<th scope="col">Objective</th>
 			<th scope="col">Note</th>
-			{# <th scope="col">Heure de départ</th>
-			<th scope="col">Heure d'arrivée</th> #}
+			<th scope="col">Heure de départ</th>
+			<th scope="col">Heure d'arrivée</th>
 		</tr>
 		{% set classement = 1 %}
 		{% for row in rows %}
 			<tr>
+				<td>{{ row.student.id }}</td>
 				<td>{{ classement }}</td>
 				<td>{{ row.student.firstname }} {{ row.student.lastname }}</td>
 				<td>{{ row.student.grade.level }}</td>
-				<td>{{ chronometres[row.getStudent().getId()]|date("H:i:s") }}</td>
+				{# vérifie que la variable chronometres contient une valeur pour l'étudiant correspondant à la ligne en cours #}
+				{% if chronometres[row.getStudent().getId()] is defined and chronometres[row.getStudent().getId()] is not null %}
+					<td>{{ chronometres[row.getStudent().getId()]|date('H:i:s') }}</td>
+				{% else %}
+					<td></td>
+				{% endif %}
 				<td>{{ row.student.mas }}</td>
 				<td>{{ row.student.objective|date("H:i:s") }}</td>
 				<td>{{ row.student.note }}</td>
-				{# <td>{{ row.run.start|date("Y-m-d H:i:s") }}</td> #}
-				{# <td>{{ row.end|date("Y-m-d H:i:s") }}</td> #}	
+				<td>{{ row.run.start|date("Y-m-d H:i:s") }}</td>
+				<td>{{ row.end|date("Y-m-d H:i:s") }}</td>	
 			</tr>
 			{% set classement = classement + 1 %}
 		{% endfor %}

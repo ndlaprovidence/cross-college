@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use PDOException;
 use App\Entity\Run;
 use App\Entity\Ranking;
@@ -9,8 +10,8 @@ use App\Entity\Student;
 use App\Repository\RunRepository;
 use App\Repository\RankingRepository;
 use App\Repository\StudentRepository;
-use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,58 +22,64 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DouchetteController extends AbstractController
-{
-    #[Route('/douchette', name: 'app_douchette')]
-    public function createDouchetteAction(Request $request, StudentRepository $studentRepository, RunRepository $runRepository, ManagerRegistry $doctrine, RankingRepository $rankingRepository)
-    {
-        $error_message = "";
-        $success_message = "";
-        $run_message = "";
-        date_default_timezone_set('Europe/Paris');
-        $identifiant = "";
+ {
+    #[ Route( '/douchette', name: 'app_douchette' ) ]
+
+    public function createDouchetteAction( Request $request, StudentRepository $studentRepository, RunRepository $runRepository, ManagerRegistry $doctrine, RankingRepository $rankingRepository )
+ {
+        $identifiant = '';
         $form = $this->createFormBuilder()
-            ->add('identifiant', TextType::class, [
-                'label' => 'Barcode',
-                'attr' => [
-                    'readonly' => false,
-                ],
-                'constraints' => [
-                    new Length([
-                        'min' => 1,
-                        'max' => 4,
-                        'maxMessage' => 'This value is too long. It should have 4 characters or less',
-                    ]),
-                    new UpperCase(),
-                ],
-            ])
-            ->getForm();
+        ->add( 'identifiant', TextType::class, [
+            'label' => 'Barcode',
+            'attr' => [
+                'readonly' => false,
+            ],
+            'constraints' => [
+                new Length( [
+                    'min' => 1,
+                    'max' => 4,
+                    'maxMessage' => 'This value is too long. It should have 4 characters or less',
+                ] ),
+                new UpperCase(),
+            ],
+        ] )
+        ->getForm();
 
-        $form->handleRequest($request);
+        $form->handleRequest( $request );
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ( $form->isSubmitted() && $form->isValid() ) {
             $data = $form->getData();
-            $identifiant = $data['identifiant'];
+            $identifiant = $data[ 'identifiant' ];
         }
+        return $this->handleBarcodeForm($identifiant, $studentRepository, $runRepository, $doctrine, $rankingRepository, $form );
+    }
+    
+    private function handleBarcodeForm(string $identifiant, StudentRepository $studentRepository, RunRepository $runRepository, ManagerRegistry $doctrine, RankingRepository $rankingRepository, FormInterface $form )
+    {
+        $chronometre = '';
+        $error_message = '';
+        $success_message = '';
+        $run_message = '';
+        date_default_timezone_set( 'Europe/Paris' );
+        $student = $studentRepository->find( $identifiant );
 
-        $student = $studentRepository->find($identifiant);
-
-        if (isset($student)) {
-            $run = $runRepository->getLast(); // Récupération du dernier run
-            $existingRanking = $rankingRepository->findOneBy([
-                'student' => $student,
-                'run' => $run
-            ]);
-            if ($existingRanking !== null) {
+        if ( isset( $student ) ) {
+            $run = $runRepository->getLast();
+            // Récupération du dernier run
+            $existingRanking = $rankingRepository->findOneBy( [
+                'student' => $student
+            ] );
+            if ( $existingRanking !== null ) {
                 // L'étudiant a déjà été ajouté à la table tbl_ranking pour cette course
                 $error_message .= "Runner already added.";
             } else {
                 $success_message .= "Runner added.";
                 $end = date("Y-m-d H:i:s");
-
+            
                 $run = $runRepository->getLast();
                 $startDateTime = $run->getStart();
-                $start = $startDateTime->format("Y-m-d H:i:s");
-
+                $start = $startDateTime->format("Y-m-d H:i:s");  
+            
                 $ranking = new Ranking();
                 $ranking->setStudent($student);
                 $ranking->setEnd(new \DateTime($end));
@@ -110,11 +117,24 @@ class DouchetteController extends AbstractController
             $startDateTime = $run->getStart();
             $start = $startDateTime->format("Y-m-d H:i:s");
             $message = "The race started on " . $start . "";
-
+        
             $run_message .= "Run found, you can scan.";
-
+        
             $chronometres = array();
+
             foreach ($rows as $row) {
+                //Cherche à trouver le classement de l'étudiant pour la course actuelle dans la base de données
+                $student = $row->getStudent();
+                $existingRanking = $rankingRepository->findOneBy([
+                    'student' => $student,
+                    'run' => $run
+                ]);
+
+                // C'est un paramètre pour afficher que les résultats de la course actuelle
+                if ($row->getRun() !== $run) {
+                    continue;
+                }
+
                 $endDateTime = $row->getEnd();
                 $end = $endDateTime->format("Y-m-d H:i:s");
                 $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
@@ -134,6 +154,7 @@ class DouchetteController extends AbstractController
                 $ranking = $rankingRepository->findOneBy([
                     'student' => $student
                 ]); 
+                
                 $ranking->setChronometre(new \DateTime($chronometre));
                 $rankingRepository->save($ranking, true);
 
@@ -216,11 +237,16 @@ class DouchetteController extends AbstractController
                             break;
                     }
                 }                
-
+                
                 $student->setNote($note);
                 $studentRepository->save($student, true);
+                
+                $chronometres[$row->getStudent()->getId()] = new \DateTime($chronometre);  
 
-                $chronometres[$row->getStudent()->getId()] = $chronometre;
+                //C'est pour récupérer les éléments de la dernière course
+                $resultRepository = $doctrine->getRepository(Ranking::class);
+                $lastRun = $runRepository->getLast();
+                $rows = $resultRepository->findByRun($lastRun);
             }
 
             return $this->render('douchette/index.html.twig', [
@@ -232,6 +258,7 @@ class DouchetteController extends AbstractController
                 'rows' => $rows,
                 'chronometres' => $chronometres,
                 'note' => $note,
+                'chronometre' => $chronometre,
             ]);
         } else {
             // Si le dernier run n'existe pas, affiche un message d'erreur
@@ -264,8 +291,8 @@ class UpperCaseValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if (!preg_match('/[0-9]/', $value)) {
-            $this->context->buildViolation($constraint->message)->addViolation();
+        if (!preg_match('/[ 0-9 ]/', $value ) ) {
+                $this->context->buildViolation( $constraint->message )->addViolation();
+            }
         }
     }
-}
