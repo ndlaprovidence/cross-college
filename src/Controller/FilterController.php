@@ -114,15 +114,17 @@ class FilterController extends AbstractController
         $sheet->setCellValue('F1', 'Chronomètre');
 
         // ajouter les données
+        $rank = 1;
         $i = 2;
-    foreach ($rows as $row) {
-        $sheet->setCellValue('A' . $i, $row['classement']);
-        $sheet->setCellValue('B' . $i, $row['firstname'] . ' ' . $row['lastname']);
-        $sheet->setCellValue('C' . $i, $row['shortname']);
-        $sheet->setCellValue('D' . $i, $row['level']);
-        $sheet->setCellValue('E' . $i, $row['gender']);
-        $sheet->setCellValue('F' . $i, $row['chronometre']->format('H:i:s'));
-        $i++;
+        foreach ($rows as $row) {
+            $sheet->setCellValue('A' . $i, $rank);
+            $sheet->setCellValue('B' . $i, $row['firstname'] . ' ' . $row['lastname']);
+            $sheet->setCellValue('C' . $i, $row['shortname']);
+            $sheet->setCellValue('D' . $i, $row['level']);
+            $sheet->setCellValue('E' . $i, $row['gender']);
+            $sheet->setCellValue('F' . $i, $row['chronometre']->format('H:i:s'));
+            $rank++;
+            $i++;
     }
 
     // générer le fichier Excel
