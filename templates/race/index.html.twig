@@ -3,7 +3,7 @@
 {% block title %}Race index{% endblock %}
 
 {% block body %}
-    <h1>Race index</h1>
+    <h1>{% trans %}Import a student list{% endtrans %}</h1>
 
     {{ message }}
 
@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Importfilename</th>
+                <th>{% trans %}Importfilename{% endtrans %}</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,17 +21,17 @@
                 <td>{{ race.id }}</td>
                 <td>{{ race.importfilename }}</td>
                 <td>
-                    <a href="{{ path('app_race_show', {'id': race.id}) }}" class="btn btn-primary btn-lg" role="button">show</a>
-                    <a href="{{ path('app_race_edit', {'id': race.id}) }}" class="btn btn-primary btn-lg" role="button">edit</a>
+                    <a href="{{ path('app_race_show', {'id': race.id}) }}" class="btn btn-primary btn-lg" role="button">{% trans %}show{% endtrans %}</a>
+                    <a href="{{ path('app_race_edit', {'id': race.id}) }}" class="btn btn-primary btn-lg" role="button">{% trans %}edit{% endtrans %}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">{% trans %}no records found{% endtrans %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_race_new') }}" class="btn btn-primary btn-lg" role="button">Create new</a>
+    <a href="{{ path('app_race_new') }}" class="btn btn-primary btn-lg" role="button">{% trans %}Create new{% endtrans %}</a>
 {% endblock %}

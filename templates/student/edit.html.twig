@@ -3,11 +3,11 @@
 {% block title %}Edit Student{% endblock %}
 
 {% block body %}
-    <h1>Edit Student</h1>
+    <h1>{% trans %}Edit Student{% endtrans %}</h1>
 
     {{ include('student/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_student_index') }}">back to list</a>
+    <a href="{{ path('app_student_index') }}">{% trans %}back to list{% endtrans %}</a>
 
     {{ include('student/_delete_form.html.twig') }}
 {% endblock %}

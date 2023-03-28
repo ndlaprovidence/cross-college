@@ -5,69 +5,237 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="ZQUidoK" resname="Welcome to KidRun">
+      <trans-unit id="Qlx3oES" resname="Welcome to KidRun">
         <source>Welcome to KidRun</source>
         <target>Bienvenue sur KidRun</target>
       </trans-unit>
-      <trans-unit id="F1B9z4R" resname="KidRun is an application used for establishments school for their cross in order to start the race, to scan their QR-CODE to record the student's time by doing automatic classification by classes and by gender.">
+      <trans-unit id="oKVbNRe" resname="KidRun is an application used for establishments school for their cross in order to start the race, to scan their QR-CODE to record the student's time by doing automatic classification by classes and by gender.">
         <source>KidRun is an application used for establishments school for their cross in order to start the race, to scan their QR-CODE to record the student's time by doing automatic classification by classes and by gender.</source>
         <target>KidRun est une application utilisée pour des établissements scolaires pour leur cross afin de démarrer la course, de scanner leur QR-CODE pour enregistrer le chrono de l'élève en faisant automatiquement un classement par classes et par genre.</target>
       </trans-unit>
-      <trans-unit id="Vpskgqa" resname="To get started, go to the QR-CODE scanner page">
+      <trans-unit id=".YDquRO" resname="To get started, go to the QR-CODE scanner page">
         <source>To get started, go to the QR-CODE scanner page</source>
         <target>Pour commencer, rendez-vous sur la page du scanner de QR-CODE</target>
       </trans-unit>
-      <trans-unit id="nz33U6Q" resname="Home">
+      <trans-unit id="OnhpU4i" resname="Home">
         <source>Home</source>
         <target>Accueil</target>
       </trans-unit>
-      <trans-unit id="U0M9PNE" resname="All Create">
+      <trans-unit id="PWLFOrh" resname="All Create">
         <source>All Create</source>
         <target>Imprimer Barcodes</target>
       </trans-unit>
-      <trans-unit id="JiEhxTc" resname="Create one">
+      <trans-unit id="tquV6gd" resname="Create one">
         <source>Create one</source>
         <target>Créer un barcode</target>
       </trans-unit>
-      <trans-unit id="4tClSWj" resname="Scanner">
+      <trans-unit id="cdTPlT5" resname="Scanner">
         <source>Scanner</source>
         <target>Scanner</target>
       </trans-unit>
-      <trans-unit id="DZO3ehf" resname="Ranking">
+      <trans-unit id="LvnVCb1" resname="Ranking">
         <source>Ranking</source>
         <target>Classement</target>
       </trans-unit>
-      <trans-unit id="xo05DSt" resname="Import">
+      <trans-unit id="LP_bqr9" resname="Import">
         <source>Import</source>
         <target>Importer les élèves</target>
       </trans-unit>
-      <trans-unit id="EhVukhv" resname="Students">
+      <trans-unit id="Khm7eN4" resname="Students">
         <source>Students</source>
         <target>Listes des élèves</target>
       </trans-unit>
-      <trans-unit id="JDGJ6tc" resname="Filter">
+      <trans-unit id="Y44kn0o" resname="Filter">
         <source>Filter</source>
         <target>Filtre</target>
       </trans-unit>
-      <trans-unit id="9iiazAv" resname="Dump all data from the Grade table">
+      <trans-unit id="mRI55SY" resname="Dump all data from the Grade table">
         <source>Dump all data from the Grade table</source>
         <target>Vider toutes les données de la table "Grade"</target>
       </trans-unit>
-      <trans-unit id="Kw3N1AA" resname="Dump all data from the Race table">
+      <trans-unit id="bo94555" resname="Dump all data from the Race table">
         <source>Dump all data from the Race table</source>
         <target>Vider toutes les données de la table "Course"</target>
       </trans-unit>
-      <trans-unit id="HGMzUJ3" resname="Dump all data from the Ranking table">
+      <trans-unit id="ti.1UXf" resname="Dump all data from the Ranking table">
         <source>Dump all data from the Ranking table</source>
         <target>Vider toutes les données de la table "Classement"</target>
       </trans-unit>
-      <trans-unit id="D5lam8." resname="Dump all data from the Run table">
+      <trans-unit id="GP8kFX3" resname="Dump all data from the Run table">
         <source>Dump all data from the Run table</source>
         <target>Vider toutes les données de la table "Classe"</target>
       </trans-unit>
-      <trans-unit id="Ogh45Pp" resname="Dump all data">
+      <trans-unit id="Uw_DfiP" resname="Dump all data">
         <source>Dump all data</source>
         <target>Vider toutes les données de la base de données</target>
+      </trans-unit>
+      <trans-unit id="4MJ8fci" resname="Creation of a QR-CODE for the student">
+        <source>Creation of a QR-CODE for the student</source>
+        <target>Création d'un QR-CODE pour un élève</target>
+      </trans-unit>
+      <trans-unit id="FV_BbAQ" resname="Submit">
+        <source>Submit</source>
+        <target>Envoyer</target>
+      </trans-unit>
+      <trans-unit id="pBMNfSw" resname="Rank">
+        <source>Rank</source>
+        <target>Classement</target>
+      </trans-unit>
+      <trans-unit id="3zh.E6q" resname="Choose gender :">
+        <source>Choose gender :</source>
+        <target>Choisir un sexe :</target>
+      </trans-unit>
+      <trans-unit id="KhZNVBV" resname="Student">
+        <source>Student</source>
+        <target>Eleve</target>
+      </trans-unit>
+      <trans-unit id="g54g_zW" resname="Grade">
+        <source>Grade</source>
+        <target>Classe</target>
+      </trans-unit>
+      <trans-unit id="i_2rD0E" resname="Chronometer">
+        <source>Chronometer</source>
+        <target>Chronomètre</target>
+      </trans-unit>
+      <trans-unit id="atQYKIS" resname="MAS">
+        <source>MAS</source>
+        <target>VMA</target>
+      </trans-unit>
+      <trans-unit id="OyCtw7L" resname="Objective">
+        <source>Objective</source>
+        <target>Objectif</target>
+      </trans-unit>
+      <trans-unit id="OOWkbLx" resname="Score">
+        <source>Score</source>
+        <target>Note</target>
+      </trans-unit>
+      <trans-unit id="5iSeghn" resname="Export table">
+        <source>Export table</source>
+        <target>Exporter le tableau</target>
+      </trans-unit>
+      <trans-unit id="0tw.6p8" resname="-- Select a grade --">
+        <source>-- Select a grade --</source>
+        <target>__-- Selectionner une classe --</target>
+      </trans-unit>
+      <trans-unit id="_nmmPg1" resname="-- Select a level --">
+        <source>-- Select a level --</source>
+        <target>__-- Selectionner un niveau --</target>
+      </trans-unit>
+      <trans-unit id="zuonEVx" resname="-- Select a gender --">
+        <source>-- Select a gender --</source>
+        <target>__-- Selectionner un sexe --</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target>Categorie</target>
+      </trans-unit>
+      <trans-unit id="oEYw74v" resname="Gender">
+        <source>Gender</source>
+        <target>Sexe</target>
+      </trans-unit>
+      <trans-unit id="hlB8CFt" resname="Ranking Scanner">
+        <source>Ranking Scanner</source>
+        <target>Scanner de classement</target>
+      </trans-unit>
+      <trans-unit id="4tClSWj" resname="Delete">
+        <source>Delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="REE8PZe" resname="Are you sure you want to delete this item?">
+        <source>Are you sure you want to delete this item?</source>
+        <target>Etes-vous sure de vouloir supprimer cet élément?</target>
+      </trans-unit>
+      <trans-unit id="OTi6gc2" resname="Edit Race">
+        <source>Edit Race</source>
+        <target>Modifier la course</target>
+      </trans-unit>
+      <trans-unit id="U0M9PNE" resname="back to list">
+        <source>back to list</source>
+        <target>Retour vers la liste</target>
+      </trans-unit>
+      <trans-unit id="8ifzJsU" resname="Import a student list">
+        <source>Import a student list</source>
+        <target>Importer une liste d'élèves</target>
+      </trans-unit>
+      <trans-unit id="6kQg_hG" resname="Importfilename">
+        <source>Importfilename</source>
+        <target>Fichier</target>
+      </trans-unit>
+      <trans-unit id="HGMzUJ3" resname="show">
+        <source>show</source>
+        <target>consulter</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>modifier</target>
+      </trans-unit>
+      <trans-unit id="D5lam8." resname="no records found">
+        <source>no records found</source>
+        <target>aucun élément trouvé</target>
+      </trans-unit>
+      <trans-unit id="nz33U6Q" resname="Create new">
+        <source>Create new</source>
+        <target>Ajouter</target>
+      </trans-unit>
+      <trans-unit id="wiJVXvu" resname="Create new Race">
+        <source>Create new Race</source>
+        <target>Créer une nouvelle course</target>
+      </trans-unit>
+      <trans-unit id="tO5K2_A" resname="Start times">
+        <source>Start times</source>
+        <target>Heure de départ</target>
+      </trans-unit>
+      <trans-unit id=".OEoQ_5" resname="Arrival times">
+        <source>Arrival times</source>
+        <target>Heure d'arrivée</target>
+      </trans-unit>
+      <trans-unit id="TQ9xp1_" resname="SCAN RESULT">
+        <source>SCAN RESULT</source>
+        <target>RESULTAT DU SCAN</target>
+      </trans-unit>
+      <trans-unit id="XVJ7lt_" resname="Result Here">
+        <source>Result Here</source>
+        <target>Voir les résultats</target>
+      </trans-unit>
+      <trans-unit id="5LufHs6" resname="Start">
+        <source>Start</source>
+        <target>Commencer</target>
+      </trans-unit>
+      <trans-unit id=".wigF.q" resname="Edit Student">
+        <source>Edit Student</source>
+        <target>Modifier les élèves</target>
+      </trans-unit>
+      <trans-unit id="1NAeYCj" resname="Student index">
+        <source>Student index</source>
+        <target>Gérer les étudiants</target>
+      </trans-unit>
+      <trans-unit id="htiPHRy" resname="Lastname">
+        <source>Lastname</source>
+        <target>Nom de famille</target>
+      </trans-unit>
+      <trans-unit id="ZHz6kbI" resname="Firstname">
+        <source>Firstname</source>
+        <target>Prénom</target>
+      </trans-unit>
+      <trans-unit id="MGdHC1k" resname="Mas">
+        <source>Mas</source>
+        <target>VMA</target>
+      </trans-unit>
+      <trans-unit id="IEQ35pm" resname="Vider toutes les données de la table &quot;Student&quot;">
+        <source>Vider toutes les données de la table "Student"</source>
+        <target>__Vider toutes les données de la table "Student"</target>
+      </trans-unit>
+      <trans-unit id="BBtzRCp" resname="Etes-vous sure de vouloir supprimer cet élément?">
+        <source>Etes-vous sure de vouloir supprimer cet élément?</source>
+        <target>__Etes-vous sure de vouloir supprimer cet élément?</target>
+      </trans-unit>
+      <trans-unit id="IKMhig0" resname="Clear all data from the &quot;Student&quot; table">
+        <source>Clear all data from the "Student" table</source>
+        <target>__Clear all data from the "Student" table</target>
+      </trans-unit>
+      <trans-unit id="hUONZVH" resname="Create new Student">
+        <source>Create new Student</source>
+        <target>__Create new Student</target>
       </trans-unit>
     </body>
   </file>

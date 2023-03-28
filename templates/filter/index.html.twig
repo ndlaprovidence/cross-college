@@ -19,10 +19,10 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>Classement</h1>
+		<h1>{% trans %}Rank{% endtrans %}</h1>
 
 		<p class="lead">
-			<a class="btn btn-primary btn-lg" href="{{ path('app_export') }}">Exporter le tableau</a>
+			<a class="btn btn-primary btn-lg" href="{{ path('app_export') }}">{% trans %}Export table{% endtrans %}</a>
 		</p>
 		
 		<br/><br/>
@@ -31,19 +31,19 @@
 				<td>
 					<form method="get" action="{{ path('app_filter') }}">
 						<select name="grades">
-							<option value="">-- Select a grade --</option>
+							<option value="">{% trans %}-- Select a grade --{% endtrans %}</option>
 							{% for grade in grades %}
 								<option value="{{ grade.shortname }}" {% if grade.shortname == grade_checked %} selected {% endif%}>{{ grade.shortname }}</option>
 							{% endfor %}
 						</select>
 						<select name="levels">
-							<option value="">-- Select a level --</option>
+							<option value="">{% trans %}-- Select a level --{% endtrans %}</option>
 							{% for level in levels %}
 								<option value="{{ level }}" {% if level==level_checked %} selected {% endif%}>{{ level }}</option>
 							{% endfor %}
 						</select>
 						<select name="genders">
-							<option value="">-- Select a gender --</option>
+							<option value="">{% trans %}-- Select a gender --{% endtrans %}</option>
 							{% for gender in genders %}
 								<option value="{{ gender }}" {% if gender==gender_checked %} selected {% endif%}>{{ gender }}</option>
 							{% endfor %}
@@ -58,12 +58,12 @@
 		<br/><br/>
 		<table class="table">
 			<tr>
-				<th scope="col">Classement</th>
-				<th scope="col">Elève</th>
-				<th scope="col">Classe</th>
-				<th scope="col">Catégorie</th>
-				<th scope="col">Genre</th>
-				<th scope="col">Chronomètre</th>
+				<th scope="col">{% trans %}Rank{% endtrans %}</th>
+				<th scope="col">{% trans %}Student{% endtrans %}</th>
+				<th scope="col">{% trans %}Grade{% endtrans %}</th>
+				<th scope="col">{% trans %}Category{% endtrans %}</th>
+				<th scope="col">{% trans %}Gender{% endtrans %}</th>
+				<th scope="col">{% trans %}Chronometer{% endtrans %}</th>
 			</tr>
 
 			{% set classement = 1 %}

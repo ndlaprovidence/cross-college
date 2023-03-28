@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Création d'un QR-CODE pour l'élève{% endblock %}
+{% block title %}{% trans %}Creation of a QR-CODE for the student{% endtrans %}{% endblock %}
 
 {% block body %}
 <form action="qrcode.php" method="post">
-    <label for="gender-select">Choisir le sexe :</label>
+    <label for="gender-select">{% trans %}Choose gender :{% endtrans %}</label>
     <select name="gender" id="gender-select">
         <option value="F">F</option>
         <option value="H">H</option>
@@ -13,6 +13,6 @@
         <label for="name">Id :</label>
         <input type="text" name="id">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{% trans %}Submit{% endtrans%}</button>
 </form>
 {% endblock %}

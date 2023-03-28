@@ -12,15 +12,15 @@
                 <td>{{ race.id }}</td>
             </tr>
             <tr>
-                <th>Importfilename</th>
+                <th>{% trans %}Importfilename{% endtrans %}</th>
                 <td>{{ race.importfilename }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_race_index') }}">back to list</a>
+    <a href="{{ path('app_race_index') }}">{% trans %}back to list{% endtrans %}</a>
 
-    <a href="{{ path('app_race_edit', {'id': race.id}) }}">edit</a>
+    <a href="{{ path('app_race_edit', {'id': race.id}) }}">{% trans %}edit{% endtrans %}</a>
 
     {{ include('race/_delete_form.html.twig') }}
 {% endblock %}

@@ -24,11 +24,11 @@
 
     <table class="table">
         <tr>
-            <th scope="col">Classement</th>
-            <th scope="col">Elève</th>
-            <th scope="col">Heure de départ</th>
-            <th scope="col">Heure d'arrivée</th>
-            <th scope="col">Chronomètre</th>
+            <th scope="col">{% trans %}Ranking{% endtrans %}</th>
+            <th scope="col">{% trans %}Student{% endtrans %}</th>
+            <th scope="col">{% trans %}Start times{% endtrans %}</th>
+            <th scope="col">{% trans %}Arrival times{% endtrans %}</th>
+            <th scope="col">{% trans %}Chronometer{% endtrans %}</th>
         </tr>
         {% set classement = 1 %}
         {% for row in rows %}
