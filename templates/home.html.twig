@@ -5,59 +5,55 @@
 {% block body %}
 <div class="container mt-5">
     <div class="jumbotron">
-        <h1 class="display-4">Bienvenue sur KidRun</h1>
-        <p class="lead">KidRun est une application utilisée pour des
-            établissements
-            scolaires pour leur cross afin de démarrer la course, de scanner
-            leur QR-CODE pour enregistrer le chrono de l'élève en faisant
-            automatiquement un classement par classes et par genre.
+        <h1 class="display-4">{% trans %}Welcome to KidRun{% endtrans %}</h1>
+        <p class="lead">{% trans %}KidRun is an application used for establishments school for their cross in order to start the race, to scan their QR-CODE to record the student's time by doing automatic classification by classes and by gender.{% endtrans %}
         </p>
         <hr class="my-4">
-        <p>Pour commencer, rendez-vous sur la page du scanner de QR-CODE</p>
+        <p>{% trans %}To get started, go to the QR-CODE scanner page{% endtrans %}</p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/">Home</a>
+            <a class="btn btn-primary btn-lg" href="/">{% trans %}Home{% endtrans %}</a>
         </p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/student/barcode">All Create</a>
+            <a class="btn btn-primary btn-lg" href="/student/barcode">{% trans %}All Create{% endtrans %}</a>
         </p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/create">Create one</a>
+            <a class="btn btn-primary btn-lg" href="/create">{% trans %}Create one{% endtrans %}</a>
         </p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/scanner">Scanner</a>
+            <a class="btn btn-primary btn-lg" href="/scanner">{% trans %}Scanner{% endtrans %}</a>
         </p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/ranking">Ranking</a>
+            <a class="btn btn-primary btn-lg" href="/ranking">{% trans %}Ranking{% endtrans %}</a>
         </p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/race">Import</a>
+            <a class="btn btn-primary btn-lg" href="/race">{% trans %}Import{% endtrans %}</a>
         </p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/student">Students</a>
+            <a class="btn btn-primary btn-lg" href="/student">{% trans %}Students{% endtrans %}</a>
         </p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/filter">Filter</a>
+            <a class="btn btn-primary btn-lg" href="/filter">{% trans %}Filter{% endtrans %}</a>
         </p> 
     </div>
     <form action="{{ path('app_grade_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all grades?');">
 		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-		<button type="submit" class="btn btn-danger">Dump all data from the "Grade" table</button>
+		<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Grade table{% endtrans %}</button>
 	</form>
     <form action="{{ path('app_race_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all races?');">
 		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-		<button type="submit" class="btn btn-danger">Dump all data from the "Race" table</button>
+		<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Race table{% endtrans %}</button>
 	</form>
     <form action="{{ path('app_ranking_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all rankings?');">
 		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-		<button type="submit" class="btn btn-danger">Dump all data from the "Ranking" table</button>
+		<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Ranking table{% endtrans %}</button>
 	</form>
     <form action="{{ path('app_run_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all runs?');">
 		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-		<button type="submit" class="btn btn-danger">Dump all data from the "Run" table</button>
+		<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Run table{% endtrans %}</button>
 	</form>
     <form action="{{ path('app_kidrun_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all database?');">
 		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-		<button type="submit" class="btn btn-danger">Dump all data</button>
+		<button type="submit" class="btn btn-danger">{% trans %}Dump all data{% endtrans %}</button>
 	</form>
     
 </div>

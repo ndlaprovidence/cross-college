@@ -28,21 +28,21 @@
 
 	<table class="table">
 		<tr>
-			<th scope="col">Id</th>
-			<th scope="col">Classement</th>
-			<th scope="col">Elève</th>
-			<th scope="col">Classe</th>
-			<th scope="col">Chronomètre</th>
+			{# <th scope="col">Id</th> #}
+			<th scope="col">{% trans %}Rank{% endtrans %}</th>
+			<th scope="col">Student</th>
+			<th scope="col">Grade</th>
+			<th scope="col">Chronometer</th>
 			<th scope="col">VMA</th>
 			<th scope="col">Objective</th>
-			<th scope="col">Note</th>
-			<th scope="col">Heure de départ</th>
-			<th scope="col">Heure d'arrivée</th>
+			<th scope="col">Score</th>
+			{# <th scope="col">Heure de départ</th>
+			<th scope="col">Heure d'arrivée</th> #}
 		</tr>
 		{% set classement = 1 %}
 		{% for row in rows %}
 			<tr>
-				<td>{{ row.student.id }}</td>
+				{# <td>{{ row.student.id }}</td> #}
 				<td>{{ classement }}</td>
 				<td>{{ row.student.firstname }} {{ row.student.lastname }}</td>
 				<td>{{ row.student.grade.level }}</td>
@@ -55,8 +55,8 @@
 				<td>{{ row.student.mas }}</td>
 				<td>{{ row.student.objective|date("H:i:s") }}</td>
 				<td>{{ row.student.note }}</td>
-				<td>{{ row.run.start|date("Y-m-d H:i:s") }}</td>
-				<td>{{ row.end|date("Y-m-d H:i:s") }}</td>	
+				{# <td>{{ row.run.start|date("Y-m-d H:i:s") }}</td>
+				<td>{{ row.end|date("Y-m-d H:i:s") }}</td>	 #}
 			</tr>
 			{% set classement = classement + 1 %}
 		{% endfor %}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="ZQUidoK" resname="Welcome to KidRun">
+        <source>Welcome to KidRun</source>
+        <target>Bienvenue sur KidRun</target>
+      </trans-unit>
+      <trans-unit id="F1B9z4R" resname="KidRun is an application used for establishments school for their cross in order to start the race, to scan their QR-CODE to record the student's time by doing automatic classification by classes and by gender.">
+        <source>KidRun is an application used for establishments school for their cross in order to start the race, to scan their QR-CODE to record the student's time by doing automatic classification by classes and by gender.</source>
+        <target>KidRun est une application utilisée pour des établissements scolaires pour leur cross afin de démarrer la course, de scanner leur QR-CODE pour enregistrer le chrono de l'élève en faisant automatiquement un classement par classes et par genre.</target>
+      </trans-unit>
+      <trans-unit id="Vpskgqa" resname="To get started, go to the QR-CODE scanner page">
+        <source>To get started, go to the QR-CODE scanner page</source>
+        <target>Pour commencer, rendez-vous sur la page du scanner de QR-CODE</target>
+      </trans-unit>
+      <trans-unit id="nz33U6Q" resname="Home">
+        <source>Home</source>
+        <target>Accueil</target>
+      </trans-unit>
+      <trans-unit id="U0M9PNE" resname="All Create">
+        <source>All Create</source>
+        <target>Imprimer Barcodes</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="Create one">
+        <source>Create one</source>
+        <target>Créer un barcode</target>
+      </trans-unit>
+      <trans-unit id="4tClSWj" resname="Scanner">
+        <source>Scanner</source>
+        <target>Scanner</target>
+      </trans-unit>
+      <trans-unit id="DZO3ehf" resname="Ranking">
+        <source>Ranking</source>
+        <target>Classement</target>
+      </trans-unit>
+      <trans-unit id="xo05DSt" resname="Import">
+        <source>Import</source>
+        <target>Importer les élèves</target>
+      </trans-unit>
+      <trans-unit id="EhVukhv" resname="Students">
+        <source>Students</source>
+        <target>Listes des élèves</target>
+      </trans-unit>
+      <trans-unit id="JDGJ6tc" resname="Filter">
+        <source>Filter</source>
+        <target>Filtre</target>
+      </trans-unit>
+      <trans-unit id="9iiazAv" resname="Dump all data from the Grade table">
+        <source>Dump all data from the Grade table</source>
+        <target>Vider toutes les données de la table "Grade"</target>
+      </trans-unit>
+      <trans-unit id="Kw3N1AA" resname="Dump all data from the Race table">
+        <source>Dump all data from the Race table</source>
+        <target>Vider toutes les données de la table "Course"</target>
+      </trans-unit>
+      <trans-unit id="HGMzUJ3" resname="Dump all data from the Ranking table">
+        <source>Dump all data from the Ranking table</source>
+        <target>Vider toutes les données de la table "Classement"</target>
+      </trans-unit>
+      <trans-unit id="D5lam8." resname="Dump all data from the Run table">
+        <source>Dump all data from the Run table</source>
+        <target>Vider toutes les données de la table "Classe"</target>
+      </trans-unit>
+      <trans-unit id="Ogh45Pp" resname="Dump all data">
+        <source>Dump all data</source>
+        <target>Vider toutes les données de la base de données</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
