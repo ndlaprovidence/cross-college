@@ -39,5 +39,26 @@
             <a class="btn btn-primary btn-lg" href="/filter">Filter</a>
         </p> 
     </div>
+    <form action="{{ path('app_grade_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all grades?');">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+		<button type="submit" class="btn btn-danger">Dump all data from the "Grade" table</button>
+	</form>
+    <form action="{{ path('app_race_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all races?');">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+		<button type="submit" class="btn btn-danger">Dump all data from the "Race" table</button>
+	</form>
+    <form action="{{ path('app_ranking_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all rankings?');">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+		<button type="submit" class="btn btn-danger">Dump all data from the "Ranking" table</button>
+	</form>
+    <form action="{{ path('app_run_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all runs?');">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+		<button type="submit" class="btn btn-danger">Dump all data from the "Run" table</button>
+	</form>
+    <form action="{{ path('app_kidrun_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all database?');">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+		<button type="submit" class="btn btn-danger">Dump all data</button>
+	</form>
+    
 </div>
 {% endblock %}
