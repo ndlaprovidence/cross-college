@@ -30,7 +30,7 @@ class DouchetteController extends AbstractController
         $identifiant = '';
         $form = $this->createFormBuilder()
         ->add( 'identifiant', TextType::class, [
-            'label' => 'Barcode',
+            'label' => 'Code barres',
             'attr' => [
                 'readonly' => false,
             ],
@@ -71,9 +71,9 @@ class DouchetteController extends AbstractController
             ] );
             if ( $existingRanking !== null ) {
                 // L'étudiant a déjà été ajouté à la table tbl_ranking pour cette course
-                $error_message .= "Runner already added.";
+                $error_message .= "Le coureur a déjà été ajouté.";
             } else {
-                $success_message .= "Runner added.";
+                $success_message .= "Le coureur a été ajouté.";
                 $end = date("Y-m-d H:i:s");
             
                 $run = $runRepository->getLast();
@@ -89,7 +89,7 @@ class DouchetteController extends AbstractController
 
             $form = $this->createFormBuilder()
                 ->add('identifiant', TextType::class, [
-                    'label' => 'Barcode',
+                    'label' => 'Code barres',
                     'attr' => [
                         'readonly' => false,
                     ],
@@ -104,7 +104,7 @@ class DouchetteController extends AbstractController
                 ])
                 ->getForm();
         } else {
-            $error_message .= "Runner not found.";
+            $error_message .= "Le coureur est introuvable.";
             $student = new Student();
         }
 
@@ -116,9 +116,9 @@ class DouchetteController extends AbstractController
             $note = null;
             $startDateTime = $run->getStart();
             $start = $startDateTime->format("Y-m-d H:i:s");
-            $message = "The race started on " . $start . "";
+            $message = "La course a démarré le " . $start . "";
         
-            $run_message .= "Run found, you can scan.";
+            $run_message .= "Une course a été trouvé, vous pouvez scanné.";
         
             $chronometres = array();
 

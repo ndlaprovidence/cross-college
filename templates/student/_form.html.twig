@@ -1,4 +1,8 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="container mt-5">
+	<div class="jumbotron">
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<button class="btn btn-primary btn-lg">{{ button_label|default('Sauvegarder') }}</button>
+		{{ form_end(form) }}
+	</div>
+</div>

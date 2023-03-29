@@ -6,7 +6,6 @@
 {% block body %}
 	<h1>{% trans %}Student index{% endtrans %}</h1>
 	<a href="{{ path('app_student_new') }}" class="btn btn-primary btn-lg" role="button">{% trans %}Create new{% endtrans %}</a>
-	<br>
 	<a href="#" class="btn btn-primary btn-lg" role="button">Exporter la liste des étudiants</a>
 	<table class="table">
 		<thead>
@@ -17,6 +16,7 @@
 				<th>{% trans %}Gender{% endtrans %}</th>
 				<th>{% trans %}Mas{% endtrans %}</th>
 				<th>{% trans %}Objective{% endtrans %}</th>
+				<th>{% trans %}Score{% endtrans %}</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -29,6 +29,7 @@
 					<td>{{ student.gender }}</td>
 					<td>{{ student.mas }}</td>
 					<td>{{ student.objective ? student.objective|date('H:i:s') : '' }}</td>
+					<td>{{ student.note}}</td>
 					<td>
 						<a href="{{ path('app_student_show', {'id': student.id}) }}" class="btn btn-primary btn-lg" role="button">{% trans %}show{% endtrans %}</a>
 						<a href="{{ path('app_student_edit', {'id': student.id}) }}" class="btn btn-primary btn-lg" role="button">{% trans %}edit{% endtrans %}</a>

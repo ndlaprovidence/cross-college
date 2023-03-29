@@ -23,11 +23,11 @@
       </trans-unit>
       <trans-unit id="PWLFOrh" resname="All Create">
         <source>All Create</source>
-        <target>Imprimer Barcodes</target>
+        <target>Imprimer des codes-barres</target>
       </trans-unit>
       <trans-unit id="tquV6gd" resname="Create one">
         <source>Create one</source>
-        <target>Créer un barcode</target>
+        <target>Créer un code-barre</target>
       </trans-unit>
       <trans-unit id="cdTPlT5" resname="Scanner">
         <source>Scanner</source>
@@ -115,15 +115,15 @@
       </trans-unit>
       <trans-unit id="0tw.6p8" resname="-- Select a grade --">
         <source>-- Select a grade --</source>
-        <target>__-- Selectionner une classe --</target>
+        <target>-- Selectionner une classe --</target>
       </trans-unit>
       <trans-unit id="_nmmPg1" resname="-- Select a level --">
         <source>-- Select a level --</source>
-        <target>__-- Selectionner un niveau --</target>
+        <target>-- Selectionner un niveau --</target>
       </trans-unit>
       <trans-unit id="zuonEVx" resname="-- Select a gender --">
         <source>-- Select a gender --</source>
-        <target>__-- Selectionner un sexe --</target>
+        <target>-- Selectionner un sexe --</target>
       </trans-unit>
       <trans-unit id="KSwG8AR" resname="Category">
         <source>Category</source>
@@ -135,7 +135,7 @@
       </trans-unit>
       <trans-unit id="hlB8CFt" resname="Ranking Scanner">
         <source>Ranking Scanner</source>
-        <target>Scanner de classement</target>
+        <target>Classement</target>
       </trans-unit>
       <trans-unit id="4tClSWj" resname="Delete">
         <source>Delete</source>
@@ -151,7 +151,7 @@
       </trans-unit>
       <trans-unit id="U0M9PNE" resname="back to list">
         <source>back to list</source>
-        <target>Retour vers la liste</target>
+        <target>Retour</target>
       </trans-unit>
       <trans-unit id="8ifzJsU" resname="Import a student list">
         <source>Import a student list</source>
@@ -223,11 +223,11 @@
       </trans-unit>
       <trans-unit id="IEQ35pm" resname="Vider toutes les données de la table &quot;Student&quot;">
         <source>Vider toutes les données de la table "Student"</source>
-        <target>__Vider toutes les données de la table "Student"</target>
+        <target>Vider toutes les données de la table "Student"</target>
       </trans-unit>
       <trans-unit id="BBtzRCp" resname="Etes-vous sure de vouloir supprimer cet élément?">
         <source>Etes-vous sure de vouloir supprimer cet élément?</source>
-        <target>__Etes-vous sure de vouloir supprimer cet élément?</target>
+        <target>Etes-vous sure de vouloir supprimer cet élément?</target>
       </trans-unit>
       <trans-unit id="IKMhig0" resname="Clear all data from the &quot;Student&quot; table">
         <source>Clear all data from the "Student" table</source>
@@ -235,7 +235,11 @@
       </trans-unit>
       <trans-unit id="hUONZVH" resname="Create new Student">
         <source>Create new Student</source>
-        <target>__Create new Student</target>
+        <target>Créer un nouveau élève</target>
+      </trans-unit>
+      <trans-unit id="UGpz_Dn" resname="Douchette">
+        <source>Douchette</source>
+        <target>Scanner</target>
       </trans-unit>
     </body>
   </file>
