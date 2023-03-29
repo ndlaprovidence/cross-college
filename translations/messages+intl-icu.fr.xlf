@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="htiPHRy" resname="Lastname">
         <source>Lastname</source>
-        <target>Nom de famille</target>
+        <target>Nom</target>
       </trans-unit>
       <trans-unit id="ZHz6kbI" resname="Firstname">
         <source>Firstname</source>
@@ -231,7 +231,7 @@
       </trans-unit>
       <trans-unit id="IKMhig0" resname="Clear all data from the &quot;Student&quot; table">
         <source>Clear all data from the "Student" table</source>
-        <target>__Clear all data from the "Student" table</target>
+        <target>Vider toutes les données de la table "Student"</target>
       </trans-unit>
       <trans-unit id="hUONZVH" resname="Create new Student">
         <source>Create new Student</source>
