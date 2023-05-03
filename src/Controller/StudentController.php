@@ -43,7 +43,7 @@ class StudentController extends AbstractController
             'stretchtext' => 4
         );
 
-        $students = $studentRepository->findAll();
+        $students = $studentRepository->findBy([], ['grade' => 'DESC']);
         $year = date("y");
 
         $i = 0;
@@ -52,7 +52,7 @@ class StudentController extends AbstractController
 
             // $id = $student->getGender() . "-" . $year . "-" . $student->getFirstname()[0] . $student->getLastname()[0] . "-" . sprintf("%04d", $student->getId());
             $id = sprintf("%04d", $student->getId());
-            $name = $student->getFirstname() . "-" . $student->getLastname();
+            $name = $student->getFirstname() . "-" . $student->getLastname() . "-" .  $student->getGrade()->getShortname();
 
             // for ($i=0; $i<=$students; $i++)
             // {
@@ -73,12 +73,12 @@ class StudentController extends AbstractController
                     $y = 10;
                 }
                 $pdf->Cell(0, 0, $name, 0, 1);
-                $pdf->write1DBarcode($id, 'C39', '', '', '', 40, 0.7, $style, 'N');
+                $pdf->write1DBarcode($id, 'C39', '', '', '', 25, 0.7, $style, 'N');
                 $pdf->Ln(4);
             } else {
                 $pdf->SetY($y);
                 $pdf->Cell(0, 0, $name, 0, 1, 'R');
-                $pdf->write1DBarcode($id, 'C39', '120', '', '', 40, 0.7, $style, 'N');
+                $pdf->write1DBarcode($id, 'C39', '120', '', '', 25, 0.7, $style, 'N');
                 $pdf->Ln(4);
             }
             $i++;
