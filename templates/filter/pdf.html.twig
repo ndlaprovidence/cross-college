@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Classement</th>
+                <th>Elève</th>
+                <th>Classe</th>
+                <th>Catégorie</th>
+                <th>Genre</th>
+                <th>Chronomètre</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+           {% set classement = 1 %}
+			{% for row in rows %}
+				<tr>
+					<td>{{ classement }}</td>
+					<td>{{ row.firstname }}
+						{{ row.lastname }}</td>
+					<td>{{ row.shortname }}</td>
+					<td>{{ row.level }}</td>
+					<td>{{ row.gender }}</td>
+					<td>{{ row.chronometre|date("H:i:s") }}</td>
+					<td>{{ row.note }}</td>
+				</tr>
+				{% set classement = classement + 1 %}
+			{% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -7,10 +7,10 @@
 	<div class="container mt-5">
 		<div class="jumbotron">
 			<h1 class="display-4">{% trans %}Welcome to KidRun{% endtrans %}</h1>
-			<p class="lead">{% trans %}KidRun is an application used for establishments school for their cross in order to start the race, to scan their QR-CODE to record the student's time by doing automatic classification by classes and by gender.{% endtrans %}
+			<p class="lead">{% trans %}Kidrun is a web application that helps schools manage their running with several interesting features{% endtrans %}
 			</p>
 			<hr class="my-4">
-			<p>{% trans %}To get started, go to the QR-CODE scanner page{% endtrans %}</p>
+			<p>{% trans %}To start, go to login to get the features{% endtrans %}</p>
 			{% if is_granted('ROLE_ADMIN') %}
 				<p class="lead">
 					<a class="btn btn-primary btn-lg" href="/student/barcode">{% trans %}All Create{% endtrans %}</a>

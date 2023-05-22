@@ -241,6 +241,46 @@
         <source>Douchette</source>
         <target>Scanner</target>
       </trans-unit>
+      <trans-unit id="0FJ_Sz1" resname="Logout">
+        <source>Logout</source>
+        <target>Déconnexion</target>
+      </trans-unit>
+      <trans-unit id="u3I07BJ" resname="Register">
+        <source>Register</source>
+        <target>S'inscrire</target>
+      </trans-unit>
+      <trans-unit id="wYmEDPf" resname="Log in">
+        <source>Log in</source>
+        <target>Se connecter</target>
+      </trans-unit>
+      <trans-unit id="dDUw20Q" resname="Please sign in">
+        <source>Please sign in</source>
+        <target>Veuillez vous connecter</target>
+      </trans-unit>
+      <trans-unit id="v9QCsvb" resname="Sign in">
+        <source>Sign in</source>
+        <target>S'identifier</target>
+      </trans-unit>
+      <trans-unit id="DFdcM3q" resname="To start, go to login to get the features">
+        <source>To start, go to login to get the features</source>
+        <target>Pour commencer, il faut se connecter pour avoir les fonctionnalités</target>
+      </trans-unit>
+      <trans-unit id="XCUEO4T" resname="Kidrun is a web application that helps schools manage their race with several interesting features">
+        <source>Kidrun is a web application that helps schools manage their race with several interesting features</source>
+        <target>Kidrun est une application web qui aident les établissements scolaires à gérer leur course avec plusieurs fonctionnalités intéressantes</target>
+      </trans-unit>
+      <trans-unit id="kHRuJki" resname="Kidrun is a web application that helps schools manage their running with several interesting features">
+        <source>Kidrun is a web application that helps schools manage their running with several interesting features</source>
+        <target>Kidrun est une application web qui aident les établissements scolaires à gérer leur course avec plusieurs fonctionnalités intéressantes</target>
+      </trans-unit>
+      <trans-unit id="5buyKSv" resname="Export table in Excel">
+        <source>Export table in Excel</source>
+        <target>Exporter le tableau en Excel</target>
+      </trans-unit>
+      <trans-unit id="FDQ2Ajy" resname="Export table in Pdf">
+        <source>Export table in Pdf</source>
+        <target>Exporter le tableau en Pdf</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

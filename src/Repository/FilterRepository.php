@@ -48,7 +48,7 @@ class FilterRepository extends ServiceEntityRepository
 
         $qb = $entityManager->createQueryBuilder();
 
-        $qb->select('s.id', 's.lastname', 's.firstname', 'g.shortname', 'g.level', 's.gender', 'r.chronometre')
+        $qb->select('s.id', 's.lastname', 's.firstname', 'g.shortname', 'g.level', 's.gender', 'r.chronometre', 's.note')
             ->from('App\Entity\Ranking', 'r')
             ->join('r.student', 's')
             ->join('s.grade', 'g');

@@ -5,6 +5,7 @@ namespace App\Controller;
 use PDO;
 use DateTime;
 use PDOException;
+use Dompdf\Dompdf;
 use App\Repository\RunRepository;
 use App\Repository\GradeRepository;
 use App\Repository\FilterRepository;
@@ -22,40 +23,43 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class FilterController extends AbstractController
 {
     /*
-    #[Route('/ranking', name: 'app_ranking')]
+    #[ Route( '/ranking', name: 'app_ranking' ) ]
+
     public function index(): Response
-    {
-    $error_message = "";
-    $rows = array();
-    $dbserver = $this->getParameter("dbserver");
-    $dbport = $this->getParameter("dbport");
-    $dbname = $this->getParameter("dbname");
-    $dbuser = $this->getParameter("dbuser");
-    $dbpassword = $this->getParameter("dbpassword");        
-    try{
-    $connexion = new PDO("mysql:host=$dbserver;port=$dbport;dbname=$dbname", $dbuser, $dbpassword);
-    
-    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sth = $connexion->prepare("SELECT * from tbl_student");
-    $sth->execute();
-    //print("Récupération de toutes les lignes d'un jeu de résultats :\n");
-    $rows = $sth->fetchAll();
-    //dump($rows);
-    }
-    catch(PDOException $e){
-    $error_message = $e->getMessage();
-    }
-    return $this->render('ranking/index.html.twig', [
-    'rows' => $rows,
-    'error_message' => $error_message,
-    ]);
+ {
+        $error_message = '';
+        $rows = array();
+        $dbserver = $this->getParameter( 'dbserver' );
+        $dbport = $this->getParameter( 'dbport' );
+        $dbname = $this->getParameter( 'dbname' );
+        $dbuser = $this->getParameter( 'dbuser' );
+        $dbpassword = $this->getParameter( 'dbpassword' );
+
+        try {
+            $connexion = new PDO( "mysql:host=$dbserver;port=$dbport;dbname=$dbname", $dbuser, $dbpassword );
+
+            $connexion->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $sth = $connexion->prepare( 'SELECT * from tbl_student' );
+            $sth->execute();
+            //print( "Récupération de toutes les lignes d'un jeu de résultats :\n" );
+            $rows = $sth->fetchAll();
+            //dump( $rows );
+        } catch( PDOException $e ) {
+            $error_message = $e->getMessage();
+        }
+        return $this->render( 'ranking/index.html.twig', [
+            'rows' => $rows,
+            'error_message' => $error_message,
+        ] );
     }
     */
 
     #[Route('/filter', name: 'app_filter')]
+
     public function index(Request $request, FilterRepository $filterRepository, GradeRepository $gradeRepository, StudentRepository $studentRepository, RunRepository $runRepository, RankingRepository $rankingRepository): Response
-    {     
-        $error_message = "";
+    {
+
+        $error_message = '';
         $rows = array();
 
         $rows = $filterRepository->findStudentsWithGrades();
@@ -74,7 +78,7 @@ class FilterController extends AbstractController
             } else {
                 $rows = $filterRepository->findStudentsWithGrades();
             }
-        }  
+        }
 
         return $this->render('filter/index.html.twig', [
             'rows' => $rows,
@@ -89,7 +93,8 @@ class FilterController extends AbstractController
         ]);
     }
 
-    #[Route('/export', name: 'app_export')]
+    #[Route('/export_excel', name: 'app_export_excel')]
+
     public function export(Request $request, FilterRepository $filterRepository)
     {
         // TODO: exporter le tableau filtré au format Excel
@@ -125,16 +130,57 @@ class FilterController extends AbstractController
             $sheet->setCellValue('F' . $i, $row['chronometre']->format('H:i:s'));
             $rank++;
             $i++;
+        }
+
+        // générer le fichier Excel
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('export.xlsx');
+
+        // envoyer le fichier Excel en réponse à la requête
+        $response = new BinaryFileResponse('export.xlsx');
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'export.xlsx');
+        return $response;
     }
 
-    // générer le fichier Excel
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('export.xlsx');
+    #[Route('/export_pdf', name: 'app_export_pdf')]
 
-    // envoyer le fichier Excel en réponse à la requête
-    $response = new BinaryFileResponse('export.xlsx');
-    $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'export.xlsx');
-    return $response;
+    public function exportPdf(Request $request, FilterRepository $filterRepository)
+    {
+        $error_message = '';
+
+        // TODO: exporter le tableau filtré au format PDF
+        $grade = $request->query->get('grades');
+        $level = $request->query->get('levels');
+        $gender = $request->query->get('genders');
+
+        $rows = $filterRepository->findStudentsWithGrades($grade, $level, $gender);
+
+        // Convertir le contenu HTML en PDF
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($this->renderView('filter/pdf.html.twig', [
+            'rows' => $rows,
+            'grades' => $grade,
+            'grade_checked' => $grade,
+            'levels' => $level,
+            'level_checked' => $level,
+            'genders' => $gender,
+            'gender_checked' => $gender,
+            'error_message' => $error_message,
+        ]));
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Enregistrer le fichier PDF
+        $pdfOutput = $dompdf->output();
+        $pdfFile = 'export.pdf';
+        file_put_contents($pdfFile, $pdfOutput);
+
+        // Envoyer le fichier PDF en réponse à la requête
+        $response = new BinaryFileResponse($pdfFile);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'export.pdf');
+
+        return $response;
     }
 }

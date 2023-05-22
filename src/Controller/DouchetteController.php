@@ -97,7 +97,7 @@ class DouchetteController extends AbstractController
                         new Length([
                             'min' => 1,
                             'max' => 4,
-                            'maxMessage' => 'This value is too long. It should have 4 characters or less',
+                            'maxMessage' => 'Cette valeur est trop longue. Il doit avoir 4 caractères ou moins',
                         ]),
                         new UpperCase(),
                     ],
@@ -262,8 +262,8 @@ class DouchetteController extends AbstractController
             ]);
         } else {
             // Si le dernier run n'existe pas, affiche un message d'erreur
-            $run_message = "No runs found, please press Start and you can scan.";
-            $message = "The race hasn't started.";
+            $run_message = "Aucune course trouvée, veuillez appuyer sur Démarrer et vous pouvez numériser.";
+            $message = "La course n'a pas commencé.";
             return $this->render('douchette/index.html.twig', [
                 'form' => $form->createView(),
                 'error_message' => $error_message,

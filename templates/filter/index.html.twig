@@ -22,7 +22,11 @@
 		<h1>{% trans %}Rank{% endtrans %}</h1>
 
 		<p class="lead">
-			<a class="btn btn-primary btn-lg" href="{{ path('app_export') }}">{% trans %}Export table{% endtrans %}</a>
+			<a class="btn btn-primary btn-lg" href="{{ path('app_export_excel') }}">{% trans %}Export table in Excel{% endtrans %}</a>
+		</p>
+
+		<p class="lead">
+			<a class="btn btn-primary btn-lg" href="{{ path('app_export_pdf') }}">{% trans %}Export table in Pdf{% endtrans %}</a>
 		</p>
 		
 		<br/><br/>
@@ -64,6 +68,7 @@
 				<th scope="col">{% trans %}Category{% endtrans %}</th>
 				<th scope="col">{% trans %}Gender{% endtrans %}</th>
 				<th scope="col">{% trans %}Chronometer{% endtrans %}</th>
+				<th scope="col">{% trans %}Score{% endtrans %}</th>
 			</tr>
 
 			{% set classement = 1 %}
@@ -76,28 +81,12 @@
 					<td>{{ row.level }}</td>
 					<td>{{ row.gender }}</td>
 					<td>{{ row.chronometre|date("H:i:s") }}</td>
+					<td>{{ row.note }}</td>
 				</tr>
 				{% set classement = classement + 1 %}
 			{% endfor %}
 
-
-			{# {% set classement = 1 %}
-																		{% for id, student in students %}
-																			<tr>
-																				<td>{{ classement }}</td>
-																				<td>{{ student.firstname }}
-																					{{ student.lastname }}</td>
-																				<td>{{ student.shortname }}</td>
-																				<td>{{ student.level }}</td>
-																				<td>{{ student.gender }}</td>
-																				<td>{{ chronometres[id]|date("H:i:s") }}</td>
-																			</tr>
-																			{% set classement = classement + 1 %}
-																		{% endfor %} #}
-
 			{{ error_message }}
 		</table>
-
-
 	</div>
 {% endblock %}
