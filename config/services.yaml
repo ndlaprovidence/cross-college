@@ -33,5 +33,9 @@ services:
     Doctrine\DBAL\Schema\Schema:
         factory: ['Doctrine\DBAL\Schema\Comparator', 'createSchema']
 
+    App\DataFixtures\AppFixtures:
+        arguments:
+            $adminPassword: "%env(ADMIN_PASSWORD)%"
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
