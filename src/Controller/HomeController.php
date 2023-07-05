@@ -105,7 +105,9 @@ class HomeController extends AbstractController
         $schemaManager = $connection->createSchemaManager();
         $tables = $schemaManager->listTableNames();
         foreach ($tables as $table) {
-            $connection->executeStatement($platform->getTruncateTableSQL($table));
+            if ($table != "tbl_user") {
+                $connection->executeStatement($platform->getTruncateTableSQL($table));
+            }
         }
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1');
 

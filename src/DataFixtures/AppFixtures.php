@@ -8,11 +8,12 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 class AppFixtures extends Fixture
-{   
+{
     public function __construct(
-       private PasswordHasherFactoryInterface $passwordHasherFactory, 
-       private string $adminPassword,) { 
-       }
+        private PasswordHasherFactoryInterface $passwordHasherFactory,
+        private string $adminPassword,
+    ) {
+    }
 
     public function load(ObjectManager $manager): void
     {
@@ -21,10 +22,10 @@ class AppFixtures extends Fixture
 
         $admin = new User();
         $admin->setRoles(['ROLE_SUPER_ADMIN']);
-        $admin->setEmail('admin@gmail.com');
+        $admin->setEmail('laurent.bouquet@joliciel.org');
         $admin->setPassword($this->passwordHasherFactory->getPasswordHasher(User::class)->hash($this->adminPassword));
         $manager->persist($admin);
 
-         $manager->flush();
+        $manager->flush();
     }
 }

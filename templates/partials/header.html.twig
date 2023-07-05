@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">Navbar</a>
+		{# <a class="navbar-brand" href="#">Navbar</a> #}
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -11,35 +11,50 @@
 						<a class="nav-link active" href="/">{% trans %}Home{% endtrans %}</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="/student/barcode">{% trans %}All Create{% endtrans %}</a>
+						<a class="nav-link active" href="/race">1) {% trans %}Import{% endtrans %}</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="/create">{% trans %}Create one{% endtrans %}</a>
+						<a class="nav-link active" href="/student">2) {% trans %}Students{% endtrans %}</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="/student/barcode" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							3) {% trans %}Codes barres{% endtrans %}
+						</a>
+						<ul class="dropdown-menu">
+							<li class="nav-item">
+								<a class="nav-link active" href="/student/barcode" target="_blank">Imprimer tous</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" href="/create" target="_blank">{% trans %}Imprimer un seul{% endtrans %}</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="/ranking">{% trans %}Ranking Scanner{% endtrans %}</a>
+						<a class="nav-link active" href="/douchette">4) {% trans %}Départ + Arrivées{% endtrans %}</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link active" href="/douchette">{% trans %}Douchette{% endtrans %}</a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="/student/barcode" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							5) {% trans %}Classement{% endtrans %}
+						</a>
+						<ul class="dropdown-menu">
+							<li class="nav-item">
+								<a class="nav-link active" href="/ranking">{% trans %}Tous{% endtrans %}</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" href="/filter">{% trans %}Filter{% endtrans %} + Exports</a>
+							</li>
+						</ul>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link active" href="/race">{% trans %}Import{% endtrans %}</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" href="/student">{% trans %}Students{% endtrans %}</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" href="/filter">{% trans %}Filter{% endtrans %}</a>
-					</li>
+					{% if is_granted('ROLE_SUPER_ADMIN') %}
+						<li class="nav-item">
+							<a class="nav-link active" href="/register">{% trans %}Register{% endtrans %}</a>
+						</li>
+					{% endif %}
 					<li class="nav-item">
 						<a class="nav-link active" href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
 					</li>
 				{% endif %}
-				{% if is_granted('ROLE_SUPER_ADMIN') %}
-					<li class="nav-item">
-						<a class="nav-link active" href="/register">{% trans %}Register{% endtrans %}</a>
-					</li>
-				{% endif %}
+
 				{% if not is_granted('ROLE_USER') %}
 					<li class="nav-item">
 						<a class="nav-link active" href="/">{% trans %}Home{% endtrans %}</a>

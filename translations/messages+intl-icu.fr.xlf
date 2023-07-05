@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="PWLFOrh" resname="All Create">
         <source>All Create</source>
-        <target>Imprimer des codes-barres</target>
+        <target>Imprimer les codes-barres</target>
       </trans-unit>
       <trans-unit id="tquV6gd" resname="Create one">
         <source>Create one</source>
@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="Khm7eN4" resname="Students">
         <source>Students</source>
-        <target>Listes des élèves</target>
+        <target>Liste des élèves</target>
       </trans-unit>
       <trans-unit id="Y44kn0o" resname="Filter">
         <source>Filter</source>
@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id="u3I07BJ" resname="Register">
         <source>Register</source>
-        <target>S'inscrire</target>
+        <target>Inscrire un utilisateur</target>
       </trans-unit>
       <trans-unit id="wYmEDPf" resname="Log in">
         <source>Log in</source>
@@ -267,11 +267,11 @@
       </trans-unit>
       <trans-unit id="XCUEO4T" resname="Kidrun is a web application that helps schools manage their race with several interesting features">
         <source>Kidrun is a web application that helps schools manage their race with several interesting features</source>
-        <target>Kidrun est une application web qui aident les établissements scolaires à gérer leur course avec plusieurs fonctionnalités intéressantes</target>
+        <target>Kidrun est une application Web qui aide les établissements scolaires à gérer leur course avec plusieurs fonctionnalités intéressantes</target>
       </trans-unit>
       <trans-unit id="kHRuJki" resname="Kidrun is a web application that helps schools manage their running with several interesting features">
         <source>Kidrun is a web application that helps schools manage their running with several interesting features</source>
-        <target>Kidrun est une application web qui aident les établissements scolaires à gérer leur course avec plusieurs fonctionnalités intéressantes</target>
+        <target>Kidrun est une application Web qui aide les établissements scolaires à gérer leur course avec plusieurs fonctionnalités intéressantes</target>
       </trans-unit>
       <trans-unit id="5buyKSv" resname="Export table in Excel">
         <source>Export table in Excel</source>

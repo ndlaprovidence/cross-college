@@ -55,37 +55,40 @@ class RankingController extends AbstractController
     #[Route('/ranking', name: 'app_ranking')]
     public function index(RunRepository $runRepository, RankingRepository $rankingRepository, StudentRepository $studentRepository): Response
     {
-        try {
-            $run = $runRepository->getLast();
-            $startDateTime = $run->getStart();
-            $start = $startDateTime->format("Y-m-d H:i:s");
-            $message = "La course a démarré le " . $start . "";
-        } catch (PDOException $e) {
-            error_log('Erreur : ' . $e->getMessage());
-        }
-
         $error_message = "";
+        $message = "";
+        $start = "";
+        $chronometres = array();
 
         $rows = $rankingRepository->findAll();
 
-        $chronometres = array();
-        foreach ($rows as $row) {
-            $endDateTime = $row->getEnd();
-            $end = $endDateTime->format("Y-m-d H:i:s");
-            $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
+        if (isset($run)) {
+            try {
+                $run = $runRepository->getLast();
+                $startDateTime = $run->getStart();
+                $start = $startDateTime->format("Y-m-d H:i:s");
+                $message = "La course a démarré le " . $start . "";
+            } catch (PDOException $e) {
+                error_log('Erreur : ' . $e->getMessage());
+            }            
+            
+            foreach ($rows as $row) {
+                $endDateTime = $row->getEnd();
+                $end = $endDateTime->format("Y-m-d H:i:s");
+                $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
 
-            $diff = $startDateTime->diff($endDateTime);
+                $diff = $startDateTime->diff($endDateTime);
 
-            $hours = $diff->h;
-            $minutes = $diff->i;
-            $seconds = $diff->s;
+                $hours = $diff->h;
+                $minutes = $diff->i;
+                $seconds = $diff->s;
 
-            $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+                $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+                $chronometres[$row->getStudent()->getId()] = $chronometre;
+            }
 
-            $chronometres[$row->getStudent()->getId()] = $chronometre;
+            asort($chronometres);
         }
-
-        asort($chronometres);
 
         return $this->render('ranking/index.html.twig', [
             'rows' => $rows,

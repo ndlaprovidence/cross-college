@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello Ranking2Controller!
-{% endblock %}
+{% block title %}NDLP - Cross du collège{% endblock %}
 
 {% block body %}
+
+	{% if not start %}
+	<div class="col">
+		<button id="start" class="button" onclick="start()">{% trans %}Lancer le départ d'une nouvelle course{% endtrans %}</button>
+	</div>
+	<script type="text/javascript" src="./js/start.js"></script>
+	{% endif %}
+
 	<br/>
 	<p class="text-danger">{{ error_message }}
 	</p>
@@ -20,10 +27,7 @@
 
 	{{ form_end(form) }}
 
-	<div class="col">
-		<button id="start" class="button" onclick="start()">{% trans %}Start{% endtrans %}</button>
-	</div>
-	<script type="text/javascript" src="./js/start.js"></script>
+
 
 
 	<table class="table">

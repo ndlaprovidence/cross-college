@@ -1,17 +1,19 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Kidrun - Accueil
-{% endblock %}
+{% block title %}NDLP - Cross du collège{% endblock %}
 
 {% block body %}
 	<div class="container mt-5">
 		<div class="jumbotron">
 			<h1 class="display-4">{% trans %}Welcome to KidRun{% endtrans %}</h1>
-			<p class="lead">{% trans %}Kidrun is a web application that helps schools manage their running with several interesting features{% endtrans %}
-			</p>
 			<hr class="my-4">
-			<p>{% trans %}To start, go to login to get the features{% endtrans %}</p>
-			{% if is_granted('ROLE_ADMIN') %}
+			{% if not is_granted('ROLE_ADMIN') %}
+				<p class="lead">{% trans %}Kidrun is a web application that helps schools manage their running with several interesting features{% endtrans %}
+				</p>
+				<p>{% trans %}To start, go to login to get the features{% endtrans %}</p>
+				<a class="nav-link active" href="{{ path('app_login') }}">{% trans %}Log in{% endtrans %}</a>
+			{% else %}
+				<!--
 				<p class="lead">
 					<a class="btn btn-primary btn-lg" href="/student/barcode">{% trans %}All Create{% endtrans %}</a>
 				</p>
@@ -32,33 +34,34 @@
 				</p>
 				<p class="lead">
 					<a class="btn btn-primary btn-lg" href="/filter">{% trans %}Filter{% endtrans %}</a>
-				</p>
-			</div>
-			<form action="{{ path('app_grade_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all grades?');">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-				<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Grade table{% endtrans %}</button>
-			</form>
-			<br>
-			<form action="{{ path('app_race_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all races?');">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-				<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Race table{% endtrans %}</button>
-			</form>
-			<br>
-			<form action="{{ path('app_ranking_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all rankings?');">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-				<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Ranking table{% endtrans %}</button>
-			</form>
-			<br>
-			<form action="{{ path('app_run_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all runs?');">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-				<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Run table{% endtrans %}</button>
-			</form>
-			<br>
-			<form action="{{ path('app_kidrun_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all database?');">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-				<button type="submit" class="btn btn-danger">{% trans %}Dump all data{% endtrans %}</button>
-			</form>
-			<br>
+				</p>			
+				-->
+				<form action="{{ path('app_grade_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all grades?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+					<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Grade table{% endtrans %}</button>
+				</form>
+				<br>
+				<form action="{{ path('app_race_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all races?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+					<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Race table{% endtrans %}</button>
+				</form>
+				<br>
+				<form action="{{ path('app_ranking_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all rankings?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+					<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Ranking table{% endtrans %}</button>
+				</form>
+				<br>
+				<form action="{{ path('app_run_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all runs?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+					<button type="submit" class="btn btn-danger">{% trans %}Dump all data from the Run table{% endtrans %}</button>
+				</form>
+				<br>
+				<form action="{{ path('app_kidrun_delete_all') }}" method="post" onsubmit="return confirm('Are you sure you want to delete all database?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+					<button type="submit" class="btn btn-danger">{% trans %}Dump all data{% endtrans %}</button>
+				</form>
+				<br>
+			</div>			
 		{% endif %}
 	</div>
 {% endblock %}
