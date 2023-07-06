@@ -123,7 +123,7 @@ class DouchetteController extends AbstractController
             $note = null;
             $startDateTime = $run->getStart();
             $start = $startDateTime->format("Y-m-d H:i:s");
-            $message = "La course a démarré le " . $start . "";
+            $message = "La course a démarré le " . $startDateTime->format("d/m/Y") . " à " . $startDateTime->format("H:i:s");
 
             $run_message .= "Une course a été trouvée, vous pouvez scanner l'arrivée des coureurs.";
 
