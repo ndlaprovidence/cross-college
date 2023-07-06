@@ -43,6 +43,7 @@ class HomeController extends AbstractController
 
         return $this->redirectToRoute('home.index');
     }
+
     #[Route('/delete-all-race', name: 'app_race_delete_all', methods: ['GET', 'POST'])]
     public function deleteAllRace(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -55,6 +56,11 @@ class HomeController extends AbstractController
             ->delete(Race::class)
             ->getQuery()
             ->execute();
+
+        $entityManager->createQueryBuilder()
+            ->delete(Run::class)
+            ->getQuery()
+            ->execute();            
 
         $this->addFlash('success', 'Toutes les courses ont été supprimés avec succès.');
 

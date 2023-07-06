@@ -51,7 +51,7 @@
       </trans-unit>
       <trans-unit id="mRI55SY" resname="Dump all data from the Grade table">
         <source>Dump all data from the Grade table</source>
-        <target>Vider toutes les données de la table "Grade"</target>
+        <target>Vider toutes les données de la table "Classe"</target>
       </trans-unit>
       <trans-unit id="bo94555" resname="Dump all data from the Race table">
         <source>Dump all data from the Race table</source>
