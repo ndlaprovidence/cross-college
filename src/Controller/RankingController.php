@@ -67,6 +67,7 @@ class RankingController extends AbstractController
             try {                
                 $startDateTime = $run->getStart();
                 $start = $startDateTime->format("Y-m-d H:i:s");
+                $startfr = $startDateTime->format("d/m/Y H:i:s");
                 $message = "La course a démarré le " . $startDateTime->format("d/m/Y") . " à " . $startDateTime->format("H:i:s");
             } catch (PDOException $e) {
                 error_log('Erreur : ' . $e->getMessage());
@@ -95,6 +96,7 @@ class RankingController extends AbstractController
             'error_message' => $error_message,
             'message' => $message,
             'start' => $start,
+            'startfr' => $startfr,            
             'chronometres' => $chronometres,
         ]);
     }

@@ -35,8 +35,8 @@
         <tr>
             <td>{{ classement }}</td>
             <td>{{ row.student.firstname }} {{ row.student.lastname }}</td>
-            <td>{{ start }}</td>
-            <td>{{ row.end|date("Y-m-d H:i:s") }}</td>
+            <td>{{ startfr }}</td>
+            <td>{{ row.end|date("d/m/Y H:i:s") }}</td>
             <td>{{ chronometres[row.getStudent().getId()] }}</td> 
         </tr>
         {% set classement = classement + 1 %}
