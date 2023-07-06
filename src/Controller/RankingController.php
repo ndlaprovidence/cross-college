@@ -61,13 +61,13 @@ class RankingController extends AbstractController
         $chronometres = array();
 
         $rows = $rankingRepository->findAll();
+        $run = $runRepository->getLast();
 
         if (isset($run)) {
-            try {
-                $run = $runRepository->getLast();
+            try {                
                 $startDateTime = $run->getStart();
                 $start = $startDateTime->format("Y-m-d H:i:s");
-                $message = "La course a démarré le " . $start . "";
+                $message = "La course a démarré le " . $startDateTime->format("d/m/Y") . " à " . $startDateTime->format("H:i:s");
             } catch (PDOException $e) {
                 error_log('Erreur : ' . $e->getMessage());
             }            
