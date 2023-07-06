@@ -40,12 +40,12 @@ class RaceController extends AbstractController
         if ($form->isSubmitted()) {
 
             $importFile = $form->get('importfilename')->getData();
-            dump($importFile);
+            // dump($importFile);
 
             // this condition is needed because the 'import' field is not required
             // so the PDF file must be processed only when a file is uploaded
             if ($importFile) {
-                dump("03");
+                // dump("03");
 
                 $originalFilename = pathinfo($importFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
