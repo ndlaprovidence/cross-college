@@ -17,7 +17,7 @@ class StudentController extends AbstractController
 {
 
     #[Route('/barcode', name: 'app_student_barcode', methods: ['GET'])]
-    public function barcode(StudentRepository $studentRepository)
+    public function barcode(StudentRepository $studentRepository): Response
     {
 
         $pdf = new \TCPDF();
@@ -84,8 +84,12 @@ class StudentController extends AbstractController
             $i++;
         }
 
-        return $pdf->Output('code_barre.pdf', 'I');
-        //return $this->renderForm('student/barcode.html.twig');
+        // return $this->renderForm('student/barcode.html.twig');
+        // return $pdf->Output('code_barre.pdf', 'I');
+        $response = new Response();
+        $response->setContent($pdf->Output('code_barre.pdf', 'I'));
+        $response->headers->set('Content-Type', 'application/pdf');
+        return $response;
     }
 
     #[Route('/', name: 'app_student_index', methods: ['GET'])]
@@ -155,7 +159,7 @@ class StudentController extends AbstractController
             ->execute();
 
         $this->addFlash('success', 'Tous les étudiants ont été supprimés avec succès.');
-    
+
         return $this->redirectToRoute('app_student_index');
     }
 
