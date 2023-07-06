@@ -66,7 +66,8 @@ class DouchetteController extends AbstractController
         if ($identifiant) {            
             if (isset($student)) {
                 $run = $runRepository->getLast();
-                // Récupération du dernier run
+                if (isset($run)) {
+                                    // Récupération du dernier run
                 $existingRanking = $rankingRepository->findOneBy([
                     'student' => $student
                 ]);
@@ -104,6 +105,10 @@ class DouchetteController extends AbstractController
                         ],
                     ])
                     ->getForm();
+                }
+                else {
+                    $error_message .= "Veuillez démarrer une course pour ensuite scanner l'arrivée des coureurs.";
+                }
             } else {
                 $error_message .= "Le coureur est introuvable.";
                 $student = new Student();
