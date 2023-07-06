@@ -36,6 +36,7 @@
             <td>{{ classement }}</td>
             <td>{{ row.student.firstname }} {{ row.student.lastname }}</td>
             <td>{{ startfr }}</td>
+            {# <td>{{ row.start|date("d/m/Y H:i:s") }}</td> #}
             <td>{{ row.end|date("d/m/Y H:i:s") }}</td>
             <td>{{ chronometres[row.getStudent().getId()] }}</td> 
         </tr>
