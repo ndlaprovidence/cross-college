@@ -130,6 +130,7 @@ class DouchetteController extends AbstractController
             $chronometres = array();
 
             foreach ($rows as $row) {
+                $secondsNote = 0;
                 //Cherche à trouver le classement de l'étudiant pour la course actuelle dans la base de données
                 $student = $row->getStudent();
                 $existingRanking = $rankingRepository->findOneBy([
@@ -152,8 +153,8 @@ class DouchetteController extends AbstractController
                 $minutesChronometre = $diffChronometre->i;
                 $secondsChronometre = $diffChronometre->s;
 
-                //$chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
-                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 11, 34);
+                $chronometre = sprintf("1970-01-01 %02d:%02d:%02d", $hoursChronometre, $minutesChronometre, $secondsChronometre);
+                //$chronometre = sprintf("1970-01-01 %02d:%02d:%02d", 0, 11, 34);
                 $chronometre2 = new DateTime($chronometre);
 
                 $student = $row->getStudent();
@@ -167,7 +168,9 @@ class DouchetteController extends AbstractController
 
                 $objective = $student->getObjective();
 
-                $secondsNote = $objective->getTimestamp() - $chronometre2->getTimestamp();
+                if (isset($objective)) {
+                    $secondsNote = $objective->getTimestamp() - $chronometre2->getTimestamp();
+                }
                 // else if ($secondsNote < -15) {
                 //     $note = null;
                 // }

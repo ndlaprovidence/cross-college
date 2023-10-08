@@ -66,7 +66,7 @@ class ImportStudentService
             $csv  = Reader::createFromPath($csvFileName, 'r');
         }
         $csv->setHeaderOffset(0);
-
+        //$csv->setDelimiter(';');
         return $csv;
     }
 

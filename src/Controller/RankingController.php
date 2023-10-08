@@ -79,12 +79,11 @@ class RankingController extends AbstractController
                 $endDateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $end);
 
                 $diff = $startDateTime->diff($endDateTime);
-
                 $hours = $diff->h;
                 $minutes = $diff->i;
                 $seconds = $diff->s;
-
                 $chronometre = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+                
                 $chronometres[$row->getStudent()->getId()] = $chronometre;
             }
 
