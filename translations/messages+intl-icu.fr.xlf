@@ -63,7 +63,7 @@
       </trans-unit>
       <trans-unit id="GP8kFX3" resname="Dump all data from the Run table">
         <source>Dump all data from the Run table</source>
-        <target>Vider toutes les données de la table "Classe"</target>
+        <target>Vider toutes les données de la table "Course"</target>
       </trans-unit>
       <trans-unit id="Uw_DfiP" resname="Dump all data">
         <source>Dump all data</source>

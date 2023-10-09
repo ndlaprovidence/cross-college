@@ -58,6 +58,13 @@ class RankingController extends AbstractController
         $error_message = "";
         $message = "";
         $start = "";
+        $startfr = "";
+
+        // $run_message = "Aucune course trouvée, veuillez lancer la course ainsi vous pourrez scanner les arrivées des coureurs.";
+        // $message = "La course n'a pas commencé.";
+        //         'run_message' => $run_message,
+        //         'message' => $message,
+
         $chronometres = array();
 
         $rows = $rankingRepository->findAll();
